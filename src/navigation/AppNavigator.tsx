@@ -11,6 +11,7 @@ import Login from '../screens/Auth/LoginScreen';
 import SignUp from '../screens/Auth/SignUpScreen';
 import Loading from '../screens/Auth/components/LoadingScreen';
 import MainLayout from '~/components/layouts/MainLayout';
+import Search from '~/screens/SearchScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -27,41 +28,49 @@ export default function AppNavigator() {
 
                 <Stack.Screen name="Home">
                     {() => (
-                    <MainLayout>
-                        <HomeScreen />
-                    </MainLayout>
+                        <MainLayout>
+                            <HomeScreen />
+                        </MainLayout>
                     )}
                 </Stack.Screen>
 
                 <Stack.Screen name="Details">
                     {() => (
-                    <MainLayout>
-                        <DetailsScreen />
-                    </MainLayout>
+                        <MainLayout>
+                            <DetailsScreen />
+                        </MainLayout>
+                    )}
+                </Stack.Screen>
+
+                <Stack.Screen name="Search">
+                    {() => (
+                        <MainLayout>
+                            <Search />
+                        </MainLayout>
                     )}
                 </Stack.Screen>
 
                 <Stack.Screen name="Cart">
                     {() => (
-                    <MainLayout>
-                        <CartScreen />
-                    </MainLayout>
+                        <MainLayout>
+                            <CartScreen />
+                        </MainLayout>
                     )}
                 </Stack.Screen>
 
                 <Stack.Screen name="Profile">
                     {() => (
-                    <MainLayout>
-                        <ProfileScreen />
-                    </MainLayout>
+                        <MainLayout>
+                            <ProfileScreen />
+                        </MainLayout>
                     )}
                 </Stack.Screen>
 
                 <Stack.Screen name="Confirmation">
                     {() => (
-                    <MainLayout>
-                        <ConfirmationScreen />
-                    </MainLayout>
+                        <MainLayout>
+                            <ConfirmationScreen />
+                        </MainLayout>
                     )}
                 </Stack.Screen>
 
