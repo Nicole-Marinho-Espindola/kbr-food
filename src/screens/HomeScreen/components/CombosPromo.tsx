@@ -1,18 +1,5 @@
 import { View, Text, Image } from "react-native";
-
-export function Combo({img, text, price}: {img:any, text:string, price:string}) {
-    return(
-        <View className="flex justify-center items-start flex-row w-full my-2">
-            <View className="h-[60px] w-[70px] rounded-xl bg-lightGray mr-4 overflow-hidden">
-                <Image source={img} className="h-full w-full object-contain" />
-            </View>
-            <View className="flex justify-center items-start flex-col">
-                <Text className="text-[20px]">{text}</Text>
-                <Text className="text-green-500 text-[20px]">{price}</Text>
-            </View>
-        </View>
-    )
-}
+import Combo from "~/components/ui/Combo";
 
 export default function CombosPromo() {
     return(
