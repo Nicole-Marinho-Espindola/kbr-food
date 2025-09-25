@@ -13,10 +13,10 @@ export function Categorie({ categorieTxt }: CategorieProps) {
       style={{ width: itemWidth }}
       className="flex justify-between items-center gap-2 mb-5"
     >
-      <View className="rounded h-[65px] w-[65px] bg-lightBlue overflow-hidden" >
+      <View className="rounded-xl h-[90px] w-[90px] bg-lightBlue overflow-hidden" >
         <Image source={require('../../../../assets/food.png')} className="h-full w-full object-contain" />
       </View>
-      <Text className="text-white">{categorieTxt}</Text>
+      <Text className="font-semibold">{categorieTxt}</Text>
     </View>
   );
 }

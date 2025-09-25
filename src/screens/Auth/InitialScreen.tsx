@@ -15,7 +15,7 @@ export default function Initial() {
           subtitle="Pronto para conhecer os melhores restaurantes?" 
         />
         <View className="w-full mt-20 space-y-10 mb-20">
-          <Button className="mb-8" title='Entrar' onPress={() => navigation.navigate('Login')} />
+          <Button className="mb-8 !bg-darkPink" title='Entrar' onPress={() => navigation.navigate('Login')} />
           <Button textColor="text-orange" className="!bg-transparent border border-orange" title='Cadastre-se' onPress={() => navigation.navigate('SignUp')} />
         </View>
         <View className="absolute bottom-24 w-full">
