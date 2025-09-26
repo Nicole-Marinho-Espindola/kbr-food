@@ -6,9 +6,9 @@ export function Food() {
   return(
     <View className="flex justify-center items-center flex-col bg-white rounded-xl p-5 max-h-[11em] my-2">
       <View className="flex flex-row mb-2 justify-start w-full">
-          <Star size={20} color="#A20021" />
-          <Star size={20} color="#A20021" />
-          <Star size={20} color="#A20021" />
+          <Star size={20} color="#F3752B" />
+          <Star size={20} color="#F3752B" />
+          <Star size={20} color="#F3752B" />
           <Star size={20} color="#EDEDF4" />
           <Star size={20} color="#EDEDF4" />
       </View>

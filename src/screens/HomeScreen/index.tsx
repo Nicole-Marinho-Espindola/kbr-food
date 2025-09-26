@@ -12,7 +12,7 @@ export default function HomeScreen() {
     <View className="flex justify-center items-center mb-28">
         <NavBar />
         <Ad />
-        <View className="flex justify-between bg-pink/5 rounded-tl-[90px] my-10 rounded-br-[90px] w-full h-[42em]">
+        <View className="flex justify-between bg-orange/15 rounded-tl-[90px] my-10 rounded-br-[90px] w-full h-[42em]">
             <Categories />
             <View className="bg-darkPink rounded-tl-[74px] rounded-br-[90px] h-1/2">
                 <Promotions />

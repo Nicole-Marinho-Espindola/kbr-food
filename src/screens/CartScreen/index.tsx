@@ -12,7 +12,7 @@ export default function CartScreen() {
         <View className="flex justify-between items-center h-screen">
             <View className="flex justify-center items-start px-8 w-full mt-5">
                 <Text className="font-light text-[25px]">Items adicionados:</Text>
-                <View className="max-h-[30em] overflow-y-scroll w-full flex justify-center items-start mt-5 bg-white rounded-xl p-4">
+                <View className="max-h-[30em] overflow-y-scroll w-full flex justify-start items-center mt-5 rounded-xl">
                     <Combo text="2 Temaki Philadelphia!" price="R$ 37,39" />
                     <Combo text="2 Temaki Philadelphia!" price="R$ 37,39" />
                     <Combo text="2 Temaki Philadelphia!" price="R$ 37,39" />

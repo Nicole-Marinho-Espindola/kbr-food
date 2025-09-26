@@ -10,9 +10,9 @@ export function Food() {
             <View>
                 <View className="flex flex-row justify-between">
                     <View className="flex flex-row mb-2 justify-between w-[100px]">
-                        <Star size={16} color="#A20021" />
-                        <Star size={16} color="#A20021" />
-                        <Star size={16} color="#A20021" />
+                        <Star size={16} color="#F3752B" />
+                        <Star size={16} color="#F3752B" />
+                        <Star size={16} color="#F3752B" />
                         <Star size={16} color="#EDEDF4" />
                         <Star size={16} color="#EDEDF4" />
                     </View>
