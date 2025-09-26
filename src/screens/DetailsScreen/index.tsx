@@ -26,7 +26,6 @@ export default function DetailsScreen() {
                     className="border border-gray-400 rounded-xl h-[8em] p-5 text-[20px] overflow-y-scroll"
                     multiline={true} 
                     numberOfLines={4} 
-                    onChangeText={() => setText(newText)}
                     value={text}
                     placeholder="Retirar cebola..."
                     textAlignVertical="top" 

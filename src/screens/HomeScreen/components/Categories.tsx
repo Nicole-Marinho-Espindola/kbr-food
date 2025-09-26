@@ -1,29 +1,9 @@
 import { View, Text, Dimensions, Image } from "react-native";
-
-type CategorieProps = {
-  categorieTxt: string;
-};
-
-const screenWidth = Dimensions.get("window").width;
-const itemWidth = (screenWidth - 32) / 3; 
-
-export function Categorie({ categorieTxt }: CategorieProps) {
-  return (
-    <View
-      style={{ width: itemWidth }}
-      className="flex justify-between items-center gap-2 mb-5"
-    >
-      <View className="rounded-xl h-[90px] w-[90px] bg-lightBlue overflow-hidden" >
-        <Image source={require('../../../../assets/food.png')} className="h-full w-full object-contain" />
-      </View>
-      <Text className="font-semibold">{categorieTxt}</Text>
-    </View>
-  );
-}
+import Categorie from "~/components/ui/Categorie";
 
 export default function Categories() {
   return (
-    <View className="flex flex-row flex-wrap justify-between pt-14 pb-10 px-2">
+    <View className="flex flex-row flex-wrap justify-between pt-16 pb-5 px-2 w-full">
       <Categorie categorieTxt="Tudo" />
       <Categorie categorieTxt="Café" />
       <Categorie categorieTxt="Almoço" />
