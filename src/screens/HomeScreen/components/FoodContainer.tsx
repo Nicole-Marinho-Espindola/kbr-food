@@ -1,5 +1,7 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { Filter } from "lucide-react-native";
 import { View , Text, Image, TouchableOpacity} from "react-native";
+import SearchProducts from "~/components/ui/SearchProducts";
 import Stars from "~/components/ui/Stars";
 
 export function Food({onPress}: {onPress: () => void}) {
@@ -27,7 +29,15 @@ export default function FoodContainer() {
     const navigation = useNavigation<any>();
 
     return(
-       <View className="px-6 pt-10 gap-4 w-full">
+       <View className="p-6 gap-4 w-full">
+            <View className="flex justify-between items-center flex-row mb-4 gap-1">
+                <View className="w-[85%]">
+                    <SearchProducts />
+                </View>
+                <View className="bg-white p-2 rounded">
+                    <Filter size={30} color="#F52F57" />
+                </View>
+            </View>
             <Food onPress={() => navigation.navigate('Details')} />
             <Food onPress={() => navigation.navigate('Details')} />
             <Food onPress={() => navigation.navigate('Details')} />
