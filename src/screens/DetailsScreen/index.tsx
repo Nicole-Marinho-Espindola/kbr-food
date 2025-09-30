@@ -14,14 +14,17 @@ export default function DetailsScreen() {
 
     return(
         <View className="p-5">
-            <Stars />
+            <View className="flex w-full justify-between items-center flex-row mb-5">
+                <Stars />
+                <Text className="text-[24px] text-green-500">R$ 25,90</Text>
+            </View>
             <View className="h-[20em] w-full rounded-xl bg-lightGray mr-4 overflow-hidden">
                 <Image source={require('../../../assets/food.png')} className="h-full w-full object-contain" />
             </View>
             <View className="mt-5 gap-5">
-                <Text className="text-[24px]">Descrição:</Text>
-                <Text className="text-[#444444] text-[24px]">Frango empanado com coca cola e sobremesa</Text>
-                <Text className="text-[24px]">Alguma observação?:</Text>
+                <Text className="text-[24px]">Descrição</Text>
+                <Text className="text-[#8d8d8d] text-[20px]">Frango empanado com coca cola e sobremesa</Text>
+                <Text className="text-[24px]">Alguma observação?</Text>
                 <TextInput
                     className="border border-gray-400 rounded-xl h-[8em] p-5 text-[20px] overflow-y-scroll"
                     multiline={true} 

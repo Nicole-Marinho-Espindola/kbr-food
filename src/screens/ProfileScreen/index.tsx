@@ -17,6 +17,7 @@ export default function ProfileScreen() {
                 <ChevronLeft size={24} color="#F52F57" />
                 <Text className="text-[24px] text-pink">Voltar</Text>
             </TouchableOpacity>
+            <Text className="text-[30px] font-light mt-10 mb-5">Bem vindo(a), <Text className="text-pink"> Nicole!</Text></Text>
             <View className="bg-white mt-5 rounded-xl">
                 <View className="flex justify-start items-center w-full flex-row p-5">
                     <Ticket size={24} color="#F52F57" />

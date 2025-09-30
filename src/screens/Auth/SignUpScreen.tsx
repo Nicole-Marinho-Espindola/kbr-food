@@ -7,19 +7,28 @@ import LogoTxt from "~/components/LogoTxt";
 import MainTitle from "~/components/MainTitle";
 import Container from "~/components/form/Container";
 import { useState } from "react";
+import { useAuth } from "~/contexts/AuthContext";
 
 export default function SignUp() {
   const navigation = useNavigation<any>();
-  const [step, setStep] = useState(1);
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+  })
 
-  const handleChange = () => {
-    setStep(2);
-  }
-
-  const handleAddUser = () => {
-    console.log("Usuário adicionado");
-    navigation.navigate('Home');
-  }
+  const { signUp } = useAuth();
+  
+  const handleAddUser = async () => {
+    try {
+      const userData = await signUp(user.name, user.email, user.password )
+      navigation.navigate('Home');
+      return userData;
+    } catch (err: any) {
+      console.log("Erro ao cadastrar:", err);
+      alert(err.message || "Erro inesperado");
+    }
+  };
 
   return (
     <View className="bg-darkPink flex justify-start items-center flex-col h-[100vh]" >
@@ -34,10 +43,26 @@ export default function SignUp() {
         />
         <View className="flex justify-center items-center flex-col w-full mt-20 space-y-10">
           <View className="w-full">
-            <Input placeholder="Nome Completo" type="text" />
-            <Input placeholder="Email" type="text" />
-            <Input placeholder="Senha" type="password" />
-            <Input placeholder="Repetir Senha" type="password" />
+            <Input
+              placeholder="Nome Completo"
+              type="text"
+              value={user.name}
+              onChangeText={(text) => setUser(prev => ({ ...prev, name: text }))}
+            />
+
+            <Input
+              placeholder="Email"
+              type="text"
+              value={user.email}
+              onChangeText={(text) => setUser(prev => ({ ...prev, email: text }))}
+            />
+
+            <Input
+              placeholder="Senha"
+              type="password"
+              value={user.password}
+              onChangeText={(text) => setUser(prev => ({ ...prev, password: text }))}
+            />
           </View>
           <View className="flex justify-center items-center text-[16px] font-light my-10 w-full"> 
             <Text className="text-light">Já possui conta? </Text>
