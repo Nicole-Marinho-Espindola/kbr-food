@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState} from "react";
 import AsyncStorage from  "@react-native-async-storage/async-storage";
-import { signIn as signInService, signUp as signUpService, signOut as signOutService } from "~/store/authStore";
+import { signIn as signInService, signUp as signUpService, signOut as signOutService } from "~/store/AuthStore";
 
 interface User {
     name: string;

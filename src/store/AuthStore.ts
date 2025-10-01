@@ -41,6 +41,7 @@ export async function signIn(email:string, password:string) {
         return user;
     }catch(error) {
         console.error("Algo deu errado ao logar:", error)
+         throw error;
     }
 }
 

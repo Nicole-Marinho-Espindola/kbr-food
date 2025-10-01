@@ -1,14 +1,68 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import { Bell, ChevronLeft, Dock, Info, LogOut, Ticket, User } from "lucide-react-native";
+import { Bell, ChevronLeft, Info, LogOut, Ticket } from "lucide-react-native";
+import { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import Button from "~/components/form/Button";
 import Input from "~/components/form/Input";
+import { useAuth } from "~/contexts/AuthContext";
+
+interface User {
+    name: string,
+    email: string,
+    password: string
+}
 
 export default function ProfileScreen() {
     const navigation = useNavigation<any>();
+    const { signOut, user } = useAuth();
+    const [address, setAddress] = useState<any>();
+    const [userEdited, setUserEdited] = useState<User>({
+        name: "",
+        email: "",
+        password: "",
+    });
 
-    const handleEdit = () => {
-        console.log("text")
+    useEffect(() => {
+        (async () => {
+            const savedAddress = await AsyncStorage.getItem("user_address");
+            if (savedAddress) setAddress(savedAddress);
+
+            if (user && typeof user !== "string") {
+            setUserEdited({
+                name: user.name,
+                email: user.email,
+                password: user.password,
+            });
+            }
+        })();
+    }, [user]);
+
+
+
+    const handleEditAddress = async () => {
+        const savedAddress = await AsyncStorage.setItem("user_address", address );
+        return savedAddress;
+    }
+
+    const handleEdit = async () => {
+        const newUser = {
+            name: userEdited.name,
+            email: userEdited.email,
+            password: userEdited.password
+        };
+
+        const storedUsers = await AsyncStorage.getItem("users");
+        const users = storedUsers ? JSON.parse(storedUsers) : [];
+        const updatedUsers = users.map((u: { email: string; }) => u.email === userEdited.email ? newUser : u);
+        await AsyncStorage.setItem("users", JSON.stringify(updatedUsers));
+
+        console.log("Usuario editado com sucesso");
+    }
+
+    const handleLogOut = async () => {
+        await signOut();
+        navigation.navigate("Initial");
     }
     
     return(
@@ -17,7 +71,7 @@ export default function ProfileScreen() {
                 <ChevronLeft size={24} color="#F52F57" />
                 <Text className="text-[24px] text-pink">Voltar</Text>
             </TouchableOpacity>
-            <Text className="text-[30px] font-light mt-10 mb-5">Bem vindo(a), <Text className="text-pink"> Nicole!</Text></Text>
+            <Text className="text-[30px] font-light mt-10 mb-5">Bem vindo(a), <Text className="text-pink"> {userEdited.name.trim().split(' ')[0]}!</Text></Text>
             <View className="bg-white mt-5 rounded-xl">
                 <View className="flex justify-start items-center w-full flex-row p-5">
                     <Ticket size={24} color="#F52F57" />
@@ -34,26 +88,45 @@ export default function ProfileScreen() {
                 <View className="flex justify-center items-end my-5 p-5">
                     <View className="flex w-full">
                         <Text className="text-[20px] font-light">Nome:</Text>
-                        <Input type="text"/>
+                        <Input 
+                            type="text" 
+                            value={userEdited.name} 
+                            onChangeText={(text) => setUserEdited(prev => ({...prev, name: text}))}
+                        />
                     </View>
                     <View className="flex w-full">
                         <Text className="text-[20px] font-light">Email:</Text>
-                        <Input type="text"/>
+                        <Input 
+                            type="text" 
+                            value={userEdited.email}
+                            onChangeText={(text) => setUserEdited(prev => ({...prev, email: text}))}
+                        />
                     </View>
                     <View className="flex w-full">
-                        <Text className="text-[20px] font-light">Número:</Text>
-                        <Input type="text"/>
+                        <Text className="text-[20px] font-light">Senha:</Text>
+                        <Input 
+                            type="password" 
+                            value={userEdited.password}
+                            onChangeText={(text) => setUserEdited(prev => ({...prev, password: text}))}
+                        />
                     </View>
                     <View className="flex w-full">
                         <Text className="text-[20px] font-light">Endereço:</Text>
-                        <Input type="text"/>
+                        <Input type="text" value={address} onChangeText={(text) => setAddress(text)}/>
                     </View>
-                    <Button title="Editar" onPress={() => handleEdit()} className="!w-1/2" />
+                    <Button 
+                        title="Editar" 
+                        onPress={() => {
+                            handleEdit();
+                            handleEditAddress();
+                        }} 
+                        className="!w-1/2" 
+                    />
                 </View>
-                <View className="flex justify-start items-center flex-row p-5 pt-0">
+                <TouchableOpacity onPress={() => handleLogOut()} className="flex justify-start items-center flex-row p-5 pt-0">
                     <LogOut size={24} color="#F52F57" />
                     <Text className="text-[24px] font-light px-3">Sair</Text>
-                </View>
+                </TouchableOpacity>
             </View>
         </View>
     )
