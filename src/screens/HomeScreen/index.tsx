@@ -18,7 +18,7 @@ export default function HomeScreen() {
                 <Promotions />
             </View>
         </View>
-        <CombosPromo />
+        {/* <CombosPromo /> */}
         <FoodContainer />
     </View>
   );

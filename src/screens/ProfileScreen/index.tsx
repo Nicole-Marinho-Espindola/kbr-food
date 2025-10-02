@@ -14,6 +14,11 @@ interface User {
 }
 
 export default function ProfileScreen() {
+    const [dropdown, setDropdown] = useState({
+        cupons: false,
+        notifications: false,
+        data: false,
+    })
     const navigation = useNavigation<any>();
     const { signOut, user } = useAuth();
     const [address, setAddress] = useState<any>();
@@ -73,56 +78,63 @@ export default function ProfileScreen() {
             </TouchableOpacity>
             <Text className="text-[30px] font-light mt-10 mb-5">Bem vindo(a), <Text className="text-pink"> {userEdited.name.trim().split(' ')[0]}!</Text></Text>
             <View className="bg-white mt-5 rounded-xl">
-                <View className="flex justify-start items-center w-full flex-row p-5">
+                <TouchableOpacity className="flex justify-start items-center w-full flex-row p-5">
                     <Ticket size={24} color="#F52F57" />
                     <Text className="font-light text-[25px] rounded-xl px-3">Cupons</Text>
-                </View>
-                <View className="flex justify-start items-center w-full flex-row p-5">
+                </TouchableOpacity>
+                <TouchableOpacity className="flex justify-start items-center w-full flex-row p-5">
                     <Bell size={24} color="#F52F57" />
                     <Text className="font-light text-[25px] rounded-xl px-3">Notificações</Text>
-                </View>
-                <View className="flex justify-start items-center flex-row p-5 mb-5 bg-darkPink">
-                    <Info size={24} color="#fff" />
-                    <Text className="font-light text-[25px] text-white px-3">Dados da Conta:</Text>
-                </View>
-                <View className="flex justify-center items-end my-5 p-5">
-                    <View className="flex w-full">
-                        <Text className="text-[20px] font-light">Nome:</Text>
-                        <Input 
-                            type="text" 
-                            value={userEdited.name} 
-                            onChangeText={(text) => setUserEdited(prev => ({...prev, name: text}))}
-                        />
-                    </View>
-                    <View className="flex w-full">
-                        <Text className="text-[20px] font-light">Email:</Text>
-                        <Input 
-                            type="text" 
-                            value={userEdited.email}
-                            onChangeText={(text) => setUserEdited(prev => ({...prev, email: text}))}
-                        />
-                    </View>
-                    <View className="flex w-full">
-                        <Text className="text-[20px] font-light">Senha:</Text>
-                        <Input 
-                            type="password" 
-                            value={userEdited.password}
-                            onChangeText={(text) => setUserEdited(prev => ({...prev, password: text}))}
-                        />
-                    </View>
-                    <View className="flex w-full">
-                        <Text className="text-[20px] font-light">Endereço:</Text>
-                        <Input type="text" value={address} onChangeText={(text) => setAddress(text)}/>
-                    </View>
-                    <Button 
-                        title="Editar" 
-                        onPress={() => {
-                            handleEdit();
-                            handleEditAddress();
-                        }} 
-                        className="!w-1/2" 
-                    />
-                </View>
+                </TouchableOpacity>
+                <TouchableOpacity 
+                    onPress={() => setDropdown(prev => ({...prev, dropdown: true}))} 
+                    className="flex justify-start items-center flex-row p-5 pb-0 mb-5"
+                >
+                    <Info size={24} color="#F52F57" />
+                    <Text className="font-light text-[25px] px-3">Dados da Conta</Text>
+                </TouchableOpacity>
+                {
+                    dropdown.data && (
+                        <View className="flex justify-center items-end mb-5 p-5 bg-darkPink/5">
+                            <View className="flex w-full">
+                                <Text className="text-[20px] font-light">Nome:</Text>
+                                <Input 
+                                    type="text" 
+                                    value={userEdited.name} 
+                                    onChangeText={(text) => setUserEdited(prev => ({...prev, name: text}))}
+                                />
+                            </View>
+                            <View className="flex w-full">
+                                <Text className="text-[20px] font-light">Email:</Text>
+                                <Input 
+                                    type="text" 
+                                    value={userEdited.email}
+                                    onChangeText={(text) => setUserEdited(prev => ({...prev, email: text}))}
+                                />
+                            </View>
+                            <View className="flex w-full">
+                                <Text className="text-[20px] font-light">Senha:</Text>
+                                <Input 
+                                    type="password" 
+                                    value={userEdited.password}
+                                    onChangeText={(text) => setUserEdited(prev => ({...prev, password: text}))}
+                                />
+                            </View>
+                            <View className="flex w-full">
+                                <Text className="text-[20px] font-light">Endereço:</Text>
+                                <Input type="text" value={address} onChangeText={(text) => setAddress(text)}/>
+                            </View>
+                            <Button 
+                                title="Editar" 
+                                onPress={() => {
+                                    handleEdit();
+                                    handleEditAddress();
+                                }} 
+                                className="!w-1/2" 
+                            />
+                        </View>
+                    )
+                }
                 <TouchableOpacity onPress={() => handleLogOut()} className="flex justify-start items-center flex-row p-5 pt-0">
                     <LogOut size={24} color="#F52F57" />
                     <Text className="text-[24px] font-light px-3">Sair</Text>

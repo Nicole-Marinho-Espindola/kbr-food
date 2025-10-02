@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { CarTaxiFrontIcon, Home, PersonStanding, Search, ShoppingCart, User } from "lucide-react-native";
+import { CarTaxiFrontIcon, Heart, Home, PersonStanding, Search, ShoppingCart, User } from "lucide-react-native";
 
 export default function TabButtons() {
     const navigation = useNavigation<any>();
@@ -12,6 +12,9 @@ export default function TabButtons() {
             </TouchableOpacity>
             <TouchableOpacity className="text-[20px]" onPress={() => navigation.navigate('Search')}>
                 <Search size={30} color="#F52F57"/>
+            </TouchableOpacity>
+            <TouchableOpacity className="text-[20px]" onPress={() => navigation.navigate('Cart')}>
+                <Heart size={30} color="#F52F57"/>
             </TouchableOpacity>
             <TouchableOpacity className="text-[20px]" onPress={() => navigation.navigate('Cart')}>
                 <ShoppingCart size={30} color="#F52F57"/>

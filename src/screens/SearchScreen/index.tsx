@@ -1,7 +1,5 @@
-import { SearchIcon, SearchX, Star } from "lucide-react-native";
 import { useState } from "react";
-import { View, Text, TextInput , Image} from "react-native";
-import Categorie from "~/components/ui/Categorie";
+import { View, Text , Image} from "react-native";
 import SearchProducts from "~/components/ui/SearchProducts";
 
 export function SearchCategorie({name,img}:{name:string,img?:any}) {
