@@ -76,21 +76,21 @@ export default function ProfileScreen() {
                 <ChevronLeft size={24} color="#F52F57" />
                 <Text className="text-[24px] text-pink">Voltar</Text>
             </TouchableOpacity>
-            <Text className="text-[30px] font-light mt-10 mb-5">Bem vindo(a), <Text className="text-pink"> {userEdited.name.trim().split(' ')[0]}!</Text></Text>
+            <Text className="text-[30px] font-light mt-10 mb-5">Bem vindo(a), <Text className="text-orange"> {userEdited.name.trim().split(' ')[0]}!</Text></Text>
             <View className="bg-white mt-5 rounded-xl">
                 <TouchableOpacity className="flex justify-start items-center w-full flex-row p-5">
-                    <Ticket size={24} color="#F52F57" />
+                    <Ticket size={24} color="#F3752B" />
                     <Text className="font-light text-[25px] rounded-xl px-3">Cupons</Text>
                 </TouchableOpacity>
                 <TouchableOpacity className="flex justify-start items-center w-full flex-row p-5">
-                    <Bell size={24} color="#F52F57" />
+                    <Bell size={24} color="#F3752B" />
                     <Text className="font-light text-[25px] rounded-xl px-3">Notificações</Text>
                 </TouchableOpacity>
                 <TouchableOpacity 
                     onPress={() => setDropdown(prev => ({...prev, dropdown: true}))} 
                     className="flex justify-start items-center flex-row p-5 pb-0 mb-5"
                 >
-                    <Info size={24} color="#F52F57" />
+                    <Info size={24} color="#F3752B" />
                     <Text className="font-light text-[25px] px-3">Dados da Conta</Text>
                 </TouchableOpacity>
                 {

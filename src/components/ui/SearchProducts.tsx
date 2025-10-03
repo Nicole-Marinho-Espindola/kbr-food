@@ -2,14 +2,14 @@ import { SearchIcon } from "lucide-react-native";
 import { useState } from "react";
 import { View, TextInput } from "react-native";
 
-export default function SearchProducts() {
+export default function SearchProducts({onChangeText, value} : {onChangeText: (text: string) => void, value: string}) {
     const [text, setText] = useState('');
     return(
         <View className="relative flex justify-center items-center h-[45px] rounded flex-row bg-white w-full">
             <TextInput
-                placeholder="Pesquisar produtos..."
-                value={text}
-                onChangeText={newText => setText(newText)}
+                placeholder="Buscar produto..."
+                value={value}
+                onChangeText={onChangeText}
                 className="w-full px-3 text-[18px]"
             />
             <View className="absolute right-3">

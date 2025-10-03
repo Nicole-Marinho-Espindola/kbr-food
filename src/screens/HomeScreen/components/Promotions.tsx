@@ -1,6 +1,5 @@
 import { ShoppingBag, Star } from "lucide-react-native";
 import { View, Text, Image } from "react-native";
-// import Swiper from "react-native-swiper";
 
 export function Food() {
   return(
@@ -31,14 +30,9 @@ export function Food() {
 export default function Promotions() {
     return(
         <View className="flex justify-center items-center px-6 pt-10">
-            <Text className="text-[30px] font-bold text-white">Promoções</Text>
+            <Text className="text-[30px] font-bold text-white">Promoção</Text>
             <View>
               <Food />
-            </View>
-            <View className="flex justify-center items-center flex-row w-full mt-5">
-                <View className="h-1.5 w-6 bg-pink"></View> 
-                <View className="h-1.5 w-6 bg-gray-300 mx-2"></View> 
-                <View className="h-1.5 w-6 bg-gray-300"></View> 
             </View>
         </View>
     )

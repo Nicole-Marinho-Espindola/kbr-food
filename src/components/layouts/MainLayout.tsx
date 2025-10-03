@@ -1,13 +1,19 @@
-import { ScrollView, View } from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
 import TabButtons from "../TabButtons";
 
-export default function MainLayout({children}: {children: React.ReactNode}) {
-    return (
-        <View>
-            <ScrollView className="min-h-screen text-lightGray pt-14">
-                {children}
-            </ScrollView>
-            <TabButtons />
-        </View>
-    );
+export default function MainLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1, paddingTop: 56 }} 
+        keyboardShouldPersistTaps="handled"
+      >
+        {children}
+      </ScrollView>
+      <TabButtons />
+    </KeyboardAvoidingView>
+  );
 }

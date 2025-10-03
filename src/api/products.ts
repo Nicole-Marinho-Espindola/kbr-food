@@ -9,3 +9,13 @@ export const getProducts = async () => {
     throw error;
   }
 };
+
+export const getProductId = async (id: number) => {
+  try {
+    const {data}  = await api.get(`/api/produtos/${id}`);
+    return data;
+  } catch (error) {
+    console.error("Algo deu errado ao listar os produtos", error);
+    throw error;
+  }
+};
