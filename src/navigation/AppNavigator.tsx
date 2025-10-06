@@ -69,13 +69,7 @@ export default function AppNavigator() {
                     )}
                 </Stack.Screen>
 
-                <Stack.Screen name="Confirmation">
-                    {() => (
-                        <MainLayout>
-                            <ConfirmationScreen />
-                        </MainLayout>
-                    )}
-                </Stack.Screen>
+                <Stack.Screen name="Confirmation" component={ConfirmationScreen} />
 
             </Stack.Navigator>
 

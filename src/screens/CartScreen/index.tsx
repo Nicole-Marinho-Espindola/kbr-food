@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import { Trash } from "lucide-react-native";
 import { useState } from "react";
 import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
@@ -58,9 +59,10 @@ export default function CartScreen() {
     const { cart, clearCart, totalValue } = useCart();
     const shipping = 5.30;
     const finalValue = totalValue + shipping;
+    const navigation = useNavigation<any>();
 
     const handleFinish = () => {
-        console.log("teste")
+        navigation.navigate("Confirmation");
     }
     return(
         <View className="flex justify-between items-center h-screen">
@@ -113,7 +115,7 @@ export default function CartScreen() {
                         <Text className="text-white text-[20px]">R$ {finalValue.toFixed(2)}</Text>
                     </View>
                </View>
-                <Button title="Finalizar pedido" onPress={() => handleFinish()}/>
+                <Button title="Confirmar pedido" onPress={() => handleFinish()}/>
             </View>
             <TabButtons />
         </View>
