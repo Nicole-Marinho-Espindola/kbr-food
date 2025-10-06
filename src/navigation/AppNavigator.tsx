@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import HomeScreen from '../screens/HomeScreen';
 import CartScreen from '../screens/CartScreen';
+import FavoriteScreen from '../screens/FavoritesScreen';
 import DetailsScreen from '../screens/DetailsScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import ConfirmationScreen from '../screens/ConfirmationScreen';
@@ -50,13 +51,15 @@ export default function AppNavigator() {
                     )}
                 </Stack.Screen>
 
-                <Stack.Screen name="Cart">
+                <Stack.Screen name="Favorite">
                     {() => (
                         <MainLayout>
-                            <CartScreen />
+                            <FavoriteScreen />
                         </MainLayout>
                     )}
                 </Stack.Screen>
+
+                <Stack.Screen name="Cart" component={CartScreen} />
 
                 <Stack.Screen name="Profile">
                     {() => (

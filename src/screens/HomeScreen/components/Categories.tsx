@@ -13,13 +13,15 @@ type CategorieProps = {
 export function Categorie({ categorieTxt, img, color = "#F3752B" }: CategorieProps) {
   const screenWidth = Dimensions.get("window").width;
   const itemWidth = (screenWidth - 32) / 3; 
+
+  const cleanPath = img.startsWith('/') ? img.substring(1) : img;
   return (
     <View
       style={{ width: itemWidth }}
       className="flex justify-between items-center gap-2 mb-5 w-full"
     >
       <View style={{ backgroundColor: `#${color}` }} className={`rounded-xl w-[100px] h-[80px] relative overflow-hidden`} >
-        <Image source={{ uri: `${api}/${img}` }} className="absolute right-0 bottom-0 h-8/10 w-1/2 object-contain bg-gray-700" />
+        <Image source={{ uri: `${api}/${cleanPath}` }} className="absolute right-0 bottom-0 h-8/10 w-1/2 object-contain bg-gray-700" />
       </View>
       <Text className="font-semibold">{categorieTxt}</Text>
     </View>

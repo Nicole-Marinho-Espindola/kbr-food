@@ -12,7 +12,7 @@ export function Food({onPress, desc, img, price}: {onPress: () => void, desc:str
             <View>
                 <View className="flex flex-row justify-between">
                     <Stars />
-                    <Heart size={20} color="#F3752B" />
+                    <Heart size={24} color="#F3752B" />
                 </View>
                 <View className="w-[250px] gap-3">
                     <Text className="text-[18px] text-lightGray">
