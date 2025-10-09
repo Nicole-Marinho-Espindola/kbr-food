@@ -5,11 +5,14 @@ import { View , Text, TouchableOpacity} from "react-native";
 import { Food } from "~/components/ui/Food";
 import SearchProducts from "~/components/ui/SearchProducts";
 import { useProduct } from "~/contexts/ProductsContext";
+import { SortAsc , SortDesc} from "lucide-react-native";
+import { useFavorites } from "~/contexts/FavoriteContext"; 
 
 export default function FoodContainer() {
     const navigation = useNavigation<any>();
     const { products, listProducts } = useProduct();
     const [search, setSearch] = useState("");
+    const { favorites } = useFavorites();
 
     useEffect(() => {
         listProducts();
@@ -21,7 +24,7 @@ export default function FoodContainer() {
 
     return(
        <View className="p-5 gap-4 w-full">
-            <View className="flex justify-between items-center flex-row mb-4 gap-1">
+            <View className="relative flex justify-between items-center flex-row mb-4 gap-1">
                 <View className="w-[85%]">
                     <SearchProducts 
                         value={search}
@@ -31,20 +34,32 @@ export default function FoodContainer() {
                 <TouchableOpacity className="bg-white p-2 rounded">
                     <Filter size={30} color="#F3752B" />
                 </TouchableOpacity>
+                <View className="absolute bottom-[-145px] right-0 bg-white p-2 rounded z-30 gap-3">
+                    <TouchableOpacity onPress={() => {}} className="flex justify-center items-center flex-row  gap-2 py-5 px-2 bg-lightBlue rounded">
+                        <SortAsc size={24} color="#F3752B" />
+                        <Text className="text-[16px] text-darkGray">Ordenar por menor preço</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => {}} className="flex justify-center items-center flex-row  gap-2 py-5 px-2 bg-lightBlue rounded">
+                        <SortDesc size={24} color="#F3752B" />
+                        <Text className="text-[16px] text-darkGray ">Ordenar por maior preço</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
             {
                 products ? (
                     filteredProducts?.map(product => (
                         <Food 
+                            id={product.id}
                             key={product.id}
                             img={product.imagem}
                             price={product.preco}
                             desc={product.nome} 
                             onPress={() => navigation.navigate('Details', { productId: product.id})} 
+                            isFavorited={favorites?.includes(product.id)}
                         />
                     ))
                 ) : (
-                    <View className="flex justify-center items-center w-full">
+                    <View className="flex justify-center items-center w-full">  
                         <Text>Nenhum produto para exibir</Text>
                     </View>
                 )

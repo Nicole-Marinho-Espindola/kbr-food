@@ -4,14 +4,17 @@ import './global.css'
 import { AuthProvider } from '~/contexts/AuthContext';
 import { ProductProvider } from '~/contexts/ProductsContext';
 import { CartProvider } from '~/contexts/CartContext';
+import { FavoritesProvider } from '~/contexts/FavoriteContext';
 
 export default function App() {
   return (
     <CartProvider>
       <ProductProvider>
-        <AuthProvider>
-          <AppNavigator />
-        </AuthProvider>
+        <FavoritesProvider>
+          <AuthProvider>
+            <AppNavigator />
+          </AuthProvider>
+        </FavoritesProvider>
       </ProductProvider>
     </CartProvider>
   );
