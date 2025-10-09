@@ -11,18 +11,26 @@ type Product = {
     total: number;
 }
 
+type orderStatus = "Pendente" | "Entregue" | "Cancelado";
+
 type Order = {
+  id: number;
+  items: {
     id: number;
     title: string;
     description?: string;
     price: number;
-    image: string;
     quantity: number;
-    total: number;
-    address: string;
-    number: string;
-    paymentMethod: string;
-}
+    image?: string;
+  }[];
+  total: number;
+  address: string;
+  number: string;
+  paymentMethod: string;
+  date: string;
+  status: orderStatus;
+};
+
 
 type CartContextType = {
   cart: Product[];
@@ -34,6 +42,7 @@ type CartContextType = {
   totalValue: number;
   pedidosAntigos: Order[];
   cartCount: number;
+  setPedidosAntigos: React.Dispatch<React.SetStateAction<Order[]>>;
 };
 
 const CartContext = createContext<CartContextType>({} as CartContextType);
@@ -69,17 +78,34 @@ export function CartProvider({ children } : { children: React.ReactNode }) {
       );
     }
 
-    const handlePlaceOrder = async (novoPedido: Order) => {
+    const handlePlaceOrder = async (novoPedido: Omit<Order, "items" | "total" | "date" | "status">) => {
       try {
-        const pedidosAtualizados = [novoPedido, ...pedidosAntigos];
+        const pedidoComStatus: Order = {
+          ...novoPedido,
+          items: cart.map(item => ({
+            id: item.id,
+            title: item.title,
+            description: item.description,
+            price: item.price,
+            quantity: item.quantity,
+            image: item.image,
+          })),
+          total: cart.reduce((acc, item) => acc + item.price * item.quantity, 0),
+          date: new Date().toISOString(),
+          status: "Pendente" as const,
+        };
+
+        const pedidosAtualizados = [pedidoComStatus, ...pedidosAntigos];
+
         await AsyncStorage.setItem("pedidos_antigos", JSON.stringify(pedidosAtualizados));
         setPedidosAntigos(pedidosAtualizados);
         setCart([]);
-        console.log("Pedido salvo com sucesso! 🚀");
+        console.log("Pedido salvo com sucesso e marcado como pendente! 🚀");
       } catch (error) {
         console.error("Erro ao salvar pedido:", error);
       }
     };
+
 
     const totalValue = cart.reduce((acc, item) => acc + item.total, 0);
 
@@ -105,7 +131,7 @@ export function CartProvider({ children } : { children: React.ReactNode }) {
     }, [cart]);
 
     return (
-        <CartContext.Provider value={{ cart, addToCart, clearCart, removeFromCart, updateQuantity, totalValue, handlePlaceOrder, pedidosAntigos, cartCount }}>
+        <CartContext.Provider value={{ cart, addToCart, clearCart, removeFromCart, updateQuantity, totalValue, handlePlaceOrder, pedidosAntigos,setPedidosAntigos, cartCount }}>
           {children}
         </CartContext.Provider>
     );

@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
 import { Info } from "lucide-react-native";
 import { useEffect, useState } from "react";
 import { View, Text, ScrollView, TextInput, TouchableOpacity } from "react-native";
@@ -19,24 +20,32 @@ export function ConfirmationItem({ title, price, desc, quantity }: { title: stri
   );
 }
 
-interface Order {
+type orderStatus = "Pendente" | "Entregue";
+
+type Order = {
+  id: number;
+  items: {
     id: number;
     title: string;
     description?: string;
     price: number;
-    image: string;
     quantity: number;
-    total: number;
-    address: string;
-    number: string;
-    paymentMethod: string;
-}
+    image?: string;
+  }[];
+  total: number;
+  address: string;
+  number: string;
+  paymentMethod: string;
+  date: string;
+  status: orderStatus;
+};
 
 export default function ConfirmationScreen() {
   const [num, setNum] = useState("");
   const [address, setAddress] = useState("");
   const [paymentMethod, setPaymentMethod] = useState<"Dinheiro" | "Pix" | "">("");
   const { cart, handlePlaceOrder } = useCart();
+  const navigation = useNavigation<any>();
 
   useEffect(() => {
     (async () => {
@@ -49,38 +58,42 @@ export default function ConfirmationScreen() {
     return cart.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2);
   };
 
-  const finalizarPedido = async () => {
-    if (!address || !num || !paymentMethod) {
-        Toast.show({
-        type: "error",
-        text1: "Ops!",
-        text2: "Preencha todos os campos antes de finalizar o pedido",
-        });
-        return;
-    }
+  const placeOrder = async () => {
+        if (!address || !num || !paymentMethod) {
+          Toast.show({
+            type: "error",
+            text1: "Ops!",
+            text2: "Preencha todos os campos antes de finalizar o pedido",
+          });
+          return;
+        }
 
-    for (const item of cart) {
-        const novoPedido: Order = {
+      const novoPedido = {
         id: Date.now(),
-        title: item.title,
-        description: item.description,
-        price: item.price,
-        image: item.image,
-        quantity: item.quantity,
-        total: item.price * item.quantity,
+        items: cart.map((item) => ({
+          id: item.id,
+          title: item.title,
+          description: item.description,
+          price: item.price,
+          quantity: item.quantity,
+          image: item.image,
+        })),
+        total: cart.reduce((acc, item) => acc + item.price * item.quantity, 0),
         address,
         number: num,
         paymentMethod,
-        };
+        date: new Date().toISOString(),
+        status: "Pendente" as const,
+      };
 
-        await handlePlaceOrder(novoPedido);
-    }
+      await handlePlaceOrder(novoPedido);
 
-    Toast.show({
+      Toast.show({
         type: "success",
         text1: "Pedido finalizado com sucesso!",
         text2: `Pagamento via ${paymentMethod} confirmado.`,
-    });
+      });
+      navigation.navigate("Orders");
     };
 
   return (
@@ -149,7 +162,7 @@ export default function ConfirmationScreen() {
       </View>
       <View className="px-5 mb-10">
         <TouchableOpacity
-          onPress={finalizarPedido}
+          onPress={placeOrder}
           className={`w-full bg-orange h-14 rounded-lg flex flex-row justify-between items-center px-5`}
         >
           <Text className={`text-[20px] font-light text-[#ffcaa4]`}>Finalizar pedido</Text>

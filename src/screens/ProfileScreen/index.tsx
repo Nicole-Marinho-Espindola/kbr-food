@@ -14,11 +14,7 @@ interface User {
 }
 
 export default function ProfileScreen() {
-    const [dropdown, setDropdown] = useState({
-        cupons: false,
-        notifications: false,
-        data: false,
-    })
+    const [dropdown, setDropdown] = useState(false)
     const navigation = useNavigation<any>();
     const { signOut, user } = useAuth();
     const [address, setAddress] = useState<any>();
@@ -77,7 +73,7 @@ export default function ProfileScreen() {
                 <Text className="text-[24px] text-pink">Voltar</Text>
             </TouchableOpacity>
             <Text className="text-[30px] font-light mt-10 mb-5">Bem vindo(a), <Text className="text-orange"> {userEdited.name.trim().split(' ')[0]}!</Text></Text>
-            <View className="bg-white mt-5 rounded-xl">
+            <View className="bg-white mt-5 rounded-xl mb-20">
                 <TouchableOpacity onPress={() => navigation.navigate("Orders")} className="flex justify-start items-center w-full flex-row p-5">
                     <NotepadText size={24} color="#F3752B" />
                     <Text className="font-light text-[25px] rounded-xl px-3">Pedidos</Text>
@@ -91,14 +87,14 @@ export default function ProfileScreen() {
                     <Text className="font-light text-[25px] rounded-xl px-3">Notificações</Text>
                 </TouchableOpacity>
                 <TouchableOpacity 
-                    onPress={() => setDropdown(prev => ({...prev, dropdown: true}))} 
+                    onPress={() => setDropdown(prev => (!prev))} 
                     className="flex justify-start items-center flex-row p-5 pb-0 mb-5"
                 >
                     <Info size={24} color="#F3752B" />
                     <Text className="font-light text-[25px] px-3">Dados da Conta</Text>
                 </TouchableOpacity>
                 {
-                    dropdown.data && (
+                    dropdown && (
                         <View className="flex justify-center items-end mb-5 p-5 bg-darkPink/5">
                             <View className="flex w-full">
                                 <Text className="text-[20px] font-light">Nome:</Text>
@@ -139,7 +135,7 @@ export default function ProfileScreen() {
                         </View>
                     )
                 }
-                <TouchableOpacity onPress={() => handleLogOut()} className="flex justify-start items-center flex-row p-5 pt-0">
+                <TouchableOpacity onPress={() => handleLogOut()} className="flex justify-start items-center flex-row p-5">
                     <LogOut size={24} color="#F52F57" />
                     <Text className="text-[24px] font-light px-3">Sair</Text>
                 </TouchableOpacity>
