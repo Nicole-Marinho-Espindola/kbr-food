@@ -15,7 +15,9 @@ export function SearchCategorie({ name, img, color = "fff", onPress }: { name: s
       onPress={onPress}
     >
       <Text className="font-semibold text-white text-[24px] p-5">{name}</Text>
-      {img && <Image source={{ uri: `${api}/${img}` }} className="h-8/10 w-1/3 bg-darkPink object-contain" />}
+      <View style={{ backgroundColor: `#${color}` }} className={`rounded-xl w-[100px] h-[80px] relative overflow-hidden`} >
+        <Image source={{ uri: img }} className="h-full w-full object-contain" />
+      </View>
     </TouchableOpacity>
   )
 }

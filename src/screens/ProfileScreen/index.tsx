@@ -78,9 +78,9 @@ export default function ProfileScreen() {
             </TouchableOpacity>
             <Text className="text-[30px] font-light mt-10 mb-5">Bem vindo(a), <Text className="text-orange"> {userEdited.name.trim().split(' ')[0]}!</Text></Text>
             <View className="bg-white mt-5 rounded-xl">
-                <TouchableOpacity className="flex justify-start items-center w-full flex-row p-5">
+                <TouchableOpacity onPress={() => navigation.navigate("Orders")} className="flex justify-start items-center w-full flex-row p-5">
                     <Ticket size={24} color="#F3752B" />
-                    <Text className="font-light text-[25px] rounded-xl px-3">Cupons</Text>
+                    <Text className="font-light text-[25px] rounded-xl px-3">Pedidos</Text>
                 </TouchableOpacity>
                 <TouchableOpacity className="flex justify-start items-center w-full flex-row p-5">
                     <Bell size={24} color="#F3752B" />

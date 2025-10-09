@@ -7,7 +7,7 @@ export function Food({onPress, desc, img, price}: {onPress: () => void, desc:str
     return (
         <TouchableOpacity onPress={onPress} className="flex flex-row p-4 w-full rounded-xl bg-white h-[8em]">
             <View className="h-full w-[80px] rounded-xl bg-lightGray mr-4 overflow-hidden">
-                <Image source={{ uri: `${api}/${img}` }} className="h-full w-full object-contain" />
+                <Image source={{ uri: img }} className="h-full w-full object-contain" />
             </View>
             <View>
                 <View className="flex flex-row justify-between">

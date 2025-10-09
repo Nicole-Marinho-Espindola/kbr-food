@@ -1,4 +1,5 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { ChevronLeft } from "lucide-react-native";
 import { useEffect, useState } from "react";
 import { View, Text , Image, TextInput, TouchableOpacity} from "react-native";
 import { useCart } from "~/contexts/CartContext";
@@ -8,6 +9,7 @@ export default function DetailsScreen() {
     const [qtd, setQtd] = useState(1);
     const [product, setProduct] = useState<any>(null);
     const [finalValue, setFinalValue] = useState<any>(null);
+    const [desc, setDesc] = useState<any>("");
     const { getProductById } = useProduct();
 
     const navigation = useNavigation<any>();
@@ -25,6 +27,7 @@ export default function DetailsScreen() {
         const newItem = {
             id: product.id,
             title: product.nome,
+            description: desc,
             price: product.preco,
             image: product.imagem,
             quantity: qtd,
@@ -45,6 +48,7 @@ export default function DetailsScreen() {
     useEffect(() => {
         handleGetProduct();
     }, [])
+
 
     return(
         <View className="p-5">
@@ -67,6 +71,8 @@ export default function DetailsScreen() {
                                 numberOfLines={4} 
                                 placeholder="Retirar cebola..."
                                 textAlignVertical="top" 
+                                value={desc}
+                                onChangeText={(text) => setDesc(text)}
                             />
                             <View className="flex justify-center items-center flex-row w-full gap-3">
                                 <View className="flex justify-center items-center flex-row">

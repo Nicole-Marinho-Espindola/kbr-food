@@ -13,6 +13,7 @@ import SignUp from '../screens/Auth/SignUpScreen';
 import Loading from '../screens/Auth/components/LoadingScreen';
 import MainLayout from '~/components/layouts/MainLayout';
 import Search from '~/screens/SearchScreen';
+import OrdersScreen from '~/screens/OrdersScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -70,6 +71,8 @@ export default function AppNavigator() {
                 </Stack.Screen>
 
                 <Stack.Screen name="Confirmation" component={ConfirmationScreen} />
+                
+                <Stack.Screen name="Orders" component={OrdersScreen} />
 
             </Stack.Navigator>
 

@@ -1,68 +1,163 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Info } from "lucide-react-native";
+import { useEffect, useState } from "react";
 import { View, Text, ScrollView, TextInput, TouchableOpacity } from "react-native";
-import Button from "~/components/form/Button";
+import Toast from "react-native-toast-message"; 
 import TabButtons from "~/components/TabButtons";
+import { useCart } from "~/contexts/CartContext";
 
-export function ConfirmationItem() {
-    return(
-        <View className="bg-white w-full p-4 rounded-xl flex justify-start items-start flex-col">
-            <Text className="text-darkPink font-semibold">Lanche do netão</Text>
-            <View className="flex justify-between items-center flex-row w-full my-2">
-                <Text className="text-green-600">59,70</Text>
-                <Text>x2</Text>
-            </View>
-            <Text className="text-gray-400">Retirar cebola</Text>
-        </View>
-    )
+export function ConfirmationItem({ title, price, desc, quantity }: { title: string, price: number, desc: string, quantity: number | string }) {
+  return (
+    <View className="bg-white w-full min-w-[20em] p-4 rounded-xl flex justify-start items-start flex-col">
+      <Text className="text-darkPink font-semibold">{title}</Text>
+      <View className="flex justify-between items-center flex-row w-full my-2">
+        <Text className="text-green-600">R$ {price}</Text>
+        <Text>x{quantity}</Text>
+      </View>
+      <Text className="text-gray-400">{desc}</Text>
+    </View>
+  );
+}
+
+interface Order {
+    id: number;
+    title: string;
+    description?: string;
+    price: number;
+    image: string;
+    quantity: number;
+    total: number;
+    address: string;
+    number: string;
+    paymentMethod: string;
 }
 
 export default function ConfirmationScreen() {
-    const Location = AsyncStorage.getItem("user_address");
+  const [num, setNum] = useState("");
+  const [address, setAddress] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState<"Dinheiro" | "Pix" | "">("");
+  const { cart, handlePlaceOrder } = useCart();
 
-    return(
-        <View className="p-5 flex justify-start items-center h-screen w-full gap-5">
-            <View className="mt-14">
-                <Text className="font-light text-[25px] mb-3">Confirmar pedido:</Text>
-                <ScrollView
-                    className="w-full max-h-[15em] bg-orange/20 rounded-xl p-3"
-                    showsVerticalScrollIndicator={true}
-                    contentContainerStyle={{ paddingBottom: 20, gap: 10, }}
-                >
-                    <ConfirmationItem />
-                    <ConfirmationItem />
-                    <ConfirmationItem />
-                </ScrollView>
-            </View>
-            <View className="w-full mb-5">
-                <Text className="font-light text-[25px] mb-4">Confirmar endereço:</Text>
-                <View className="flex justify-center items-center w-full">
-                    <View className="w-full mb-4">
-                        <Text className="text-darkPink">Número:</Text>
-                        <TextInput className="border-b border-darkPink px-2 py-3 w-full" placeholder="Digitar número..."></TextInput>
-                    </View>
-                    <View className="w-full">
-                        <Text className="text-darkPink">Endereço <Text className="text-gray-500">(editável)</Text>:</Text>
-                        <TextInput className="border-b border-darkPink px-2 py-3 w-full" placeholder="Digitar endereço...">{Location}</TextInput>
-                    </View>
-                </View>
-            </View>
-            <View className="w-full mb-5">
-                <Text className="font-light text-[25px] mb-3">Forma de pagamento:</Text>
-                <View className="w-full">
-                    <TouchableOpacity className="border border-darkPink/20 rounded-xl p-3 mb-2">
-                        <Text>Dinheiro</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity className="border border-darkPink/20 rounded-xl p-3 mb-2">
-                        <Text>Pix</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-            <View className="flex justify-center items-center gap-3 flex-row">
-                <Text className="text-[24px]">Total:</Text>
-                <Text className="text-[24px] text-green-600">R$ 250,70</Text>
-            </View>
-            <Button title="Finalizar pedido" onPress={() => {}}/>
-            <TabButtons />
+  useEffect(() => {
+    (async () => {
+      const savedLocation = await AsyncStorage.getItem("user_address");
+      if (savedLocation) setAddress(savedLocation);
+    })();
+  }, []);
+
+  const calcularTotal = () => {
+    return cart.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2);
+  };
+
+  const finalizarPedido = async () => {
+    if (!address || !num || !paymentMethod) {
+        Toast.show({
+        type: "error",
+        text1: "Ops!",
+        text2: "Preencha todos os campos antes de finalizar o pedido",
+        });
+        return;
+    }
+
+    for (const item of cart) {
+        const novoPedido: Order = {
+        id: Date.now(),
+        title: item.title,
+        description: item.description,
+        price: item.price,
+        image: item.image,
+        quantity: item.quantity,
+        total: item.price * item.quantity,
+        address,
+        number: num,
+        paymentMethod,
+        };
+
+        await handlePlaceOrder(novoPedido);
+    }
+
+    Toast.show({
+        type: "success",
+        text1: "Pedido finalizado com sucesso!",
+        text2: `Pagamento via ${paymentMethod} confirmado.`,
+    });
+    };
+
+  return (
+    <View className="flex justify-start items-center h-screen w-full gap-5">
+      <View className="font-light text-[20px] mb-3 h-40 pt-12 bg-darkPink w-full flex justify-center items-center flex-row gap-2 rounded-br-[50px]">
+        <Info size={20} color="#fff" />
+        <Text className="text-white text-[24px] font-semibold">Informações do pedido</Text>
+      </View>
+      <View className="px-5">
+        <Text className="font-light text-[18px] mb-3">Confirmar pedido:</Text>
+        <ScrollView
+          className="w-full max-h-[15em] border border-gray-300 rounded-xl p-3"
+          showsVerticalScrollIndicator={true}
+          contentContainerStyle={{ paddingBottom: 20, gap: 10 }}
+        >
+          {cart.map((item) => (
+            <ConfirmationItem
+              key={item.id}
+              title={item.title}
+              price={item.price}
+              desc={item.description || "Nenhuma observação"}
+              quantity={item.quantity}
+            />
+          ))}
+        </ScrollView>
+      </View>
+      <View className="w-full mb-2 px-5">
+        <Text className="font-light text-[18px] mb-4">Confirmar endereço:</Text>
+        <View className="flex justify-center items-center w-full">
+          <View className="w-full mb-4">
+            <Text className="text-darkPink">Número:</Text>
+            <TextInput
+              value={num}
+              onChangeText={(text) => setNum(text)}
+              className="border-b border-gray-300 px-2 py-3 w-full"
+              placeholder="Digitar número..."
+            />
+          </View>
+          <View className="w-full">
+            <Text className="text-darkPink">Endereço <Text className="text-gray-500">(editável)</Text>:</Text>
+            <TextInput
+              value={address}
+              onChangeText={(text) => setAddress(text)}
+              className="border-b border-gray-300 px-2 py-3 w-full"
+              placeholder="Digitar endereço..."
+            />
+          </View>
         </View>
-    )
+      </View>
+      <View className="w-full px-5">
+        <Text className="font-light text-[18px] mb-3">Forma de pagamento:</Text>
+        <View className="w-full flex flex-row gap-3">
+          {["Dinheiro", "Pix"].map((method) => (
+            <TouchableOpacity
+              key={method}
+              onPress={() => setPaymentMethod(method as "Dinheiro" | "Pix")}
+              className={`flex-1 border rounded-xl p-3 items-center ${paymentMethod === method ? "border-darkPink bg-pink-100" : "border-gray-300"
+                }`}
+            >
+              <Text className={`${paymentMethod === method ? "text-darkPink font-semibold" : ""}`}>
+                {method}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </View>
+      <View className="px-5 mb-10">
+        <TouchableOpacity
+          onPress={finalizarPedido}
+          className={`w-full bg-orange h-14 rounded-lg flex flex-row justify-between items-center px-5`}
+        >
+          <Text className={`text-[20px] font-light text-[#ffcaa4]`}>Finalizar pedido</Text>
+          <Text className={`text-[20px] font-light text-white`}>R$ {calcularTotal()}</Text>
+        </TouchableOpacity>
+      </View>
+      <TabButtons />
+      <Toast />
+    </View>
+  );
 }

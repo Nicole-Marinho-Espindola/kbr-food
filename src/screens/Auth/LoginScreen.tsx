@@ -11,7 +11,6 @@ import { useState } from "react";
 
 export default function Login() {
   const navigation = useNavigation<any>();
-  console.log("Login carregada");
   
   const [error , setError] = useState(false)
   const [user, setUser] = useState({

@@ -14,14 +14,13 @@ export function Categorie({ categorieTxt, img, color = "#F3752B" }: CategoriePro
   const screenWidth = Dimensions.get("window").width;
   const itemWidth = (screenWidth - 32) / 3; 
 
-  const cleanPath = img.startsWith('/') ? img.substring(1) : img;
   return (
     <View
       style={{ width: itemWidth }}
       className="flex justify-between items-center gap-2 mb-5 w-full"
     >
       <View style={{ backgroundColor: `#${color}` }} className={`rounded-xl w-[100px] h-[80px] relative overflow-hidden`} >
-        <Image source={{ uri: `${api}/${cleanPath}` }} className="absolute right-0 bottom-0 h-8/10 w-1/2 object-contain bg-gray-700" />
+        <Image source={{ uri: img }} className="h-full w-full object-contain" />
       </View>
       <Text className="font-semibold">{categorieTxt}</Text>
     </View>
@@ -41,14 +40,15 @@ export default function Categories() {
       <View className="flex flex-row flex-wrap justify-between px-2 w-full">
         {
           categories ? (
-            categories?.slice(0, 6).map(categorie => (
+            categories?.slice(0, 6).map(categorie => {
+              return(
               <Categorie 
                 key={categorie.id}
                 categorieTxt={categorie.nome} 
                 color={categorie.corHex} 
                 img={categorie.imagem} 
               />
-            ))
+            )})
           ): (
             <View>
               <Text>Nenhuma categoria para listar</Text>

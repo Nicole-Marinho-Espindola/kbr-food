@@ -4,25 +4,42 @@ import { createContext, useContext, useEffect, useState } from "react";
 type Product = {
     id: number;
     title: string;
+    description?: string;
     price: number;
     image: string;
     quantity: number;
     total: number;
 }
 
+type Order = {
+    id: number;
+    title: string;
+    description?: string;
+    price: number;
+    image: string;
+    quantity: number;
+    total: number;
+    address: string;
+    number: string;
+    paymentMethod: string;
+}
+
 type CartContextType = {
   cart: Product[];
   addToCart: (item: Product) => void;
+  handlePlaceOrder: (item: Order) => void;
   removeFromCart: (id: number) => void;
   updateQuantity: (id: number, qtd: number) => void;
   clearCart: () => void;
   totalValue: number;
+  pedidosAntigos: Order[];
 };
 
 const CartContext = createContext<CartContextType>({} as CartContextType);
 
 export function CartProvider({ children } : { children: React.ReactNode }) {
     const [cart, setCart] = useState<Product[]>([]);
+    const [pedidosAntigos, setPedidosAntigos] = useState<Order[]>([]);
 
     const addToCart = (item: Product) => { 
       setCart((prev) => {
@@ -50,6 +67,18 @@ export function CartProvider({ children } : { children: React.ReactNode }) {
       );
     }
 
+    const handlePlaceOrder = async (novoPedido: Order) => {
+      try {
+        const pedidosAtualizados = [novoPedido, ...pedidosAntigos];
+        await AsyncStorage.setItem("pedidos_antigos", JSON.stringify(pedidosAtualizados));
+        setPedidosAntigos(pedidosAtualizados);
+        setCart([]);
+        console.log("Pedido salvo com sucesso! 🚀");
+      } catch (error) {
+        console.error("Erro ao salvar pedido:", error);
+      }
+    };
+
     const totalValue = cart.reduce((acc, item) => acc + item.total, 0);
 
     const clearCart = () => {
@@ -60,9 +89,16 @@ export function CartProvider({ children } : { children: React.ReactNode }) {
       AsyncStorage.setItem("@cart", JSON.stringify(cart));
     }, [cart]);
 
+    useEffect(() => {
+      (async () => {
+        const storedOrders = await AsyncStorage.getItem("pedidos_antigos");
+        if (storedOrders) setPedidosAntigos(JSON.parse(storedOrders));
+      })();
+    }, []);
+
 
     return (
-        <CartContext.Provider value={{ cart, addToCart, clearCart, removeFromCart, updateQuantity, totalValue }}>
+        <CartContext.Provider value={{ cart, addToCart, clearCart, removeFromCart, updateQuantity, totalValue, handlePlaceOrder, pedidosAntigos }}>
           {children}
         </CartContext.Provider>
     );
