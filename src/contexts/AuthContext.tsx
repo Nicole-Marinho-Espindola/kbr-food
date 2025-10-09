@@ -9,6 +9,7 @@ interface User {
 }
 
 interface AuthContextProps {
+    setUser: React.Dispatch<React.SetStateAction<User | null | string>>;
     user: User | null | string;
     isAuthenticated: boolean;
     signIn: (email:string, password: string) => Promise<void>;
@@ -51,6 +52,7 @@ export function AuthProvider({ children } : { children: React.ReactNode }) {
                 signIn,
                 signUp,
                 signOut,
+                setUser
             }}
         >
             {children}

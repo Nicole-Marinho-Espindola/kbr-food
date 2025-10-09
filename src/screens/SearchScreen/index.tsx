@@ -77,11 +77,12 @@ export default function Search() {
             </TouchableOpacity>
             {filteredProducts?.map(product => (
                 <Food 
-                    key={product.id}
-                    img={product.imagem}
-                    price={product.preco}
-                    desc={product.nome} 
-                    onPress={() => navigation.navigate('Details', { productId: product.id})} 
+                  id={product.id}
+                  key={product.id}
+                  img={product.imagem}
+                  price={product.preco}
+                  desc={product.nome} 
+                  onPress={() => navigation.navigate('Details', { productId: product.id})} 
                 />
             ))}
         </View>

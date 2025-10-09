@@ -1,6 +1,7 @@
+import { useNavigation } from "@react-navigation/native";
 import { Plus } from "lucide-react-native";
 import { useEffect } from "react";
-import { Dimensions, View, Image, Text } from "react-native";
+import { Dimensions, View, Image, Text, TouchableOpacity } from "react-native";
 import { api } from "~/api/api";
 import { useProduct } from "~/contexts/ProductsContext";
 
@@ -13,9 +14,11 @@ type CategorieProps = {
 export function Categorie({ categorieTxt, img, color = "#F3752B" }: CategorieProps) {
   const screenWidth = Dimensions.get("window").width;
   const itemWidth = (screenWidth - 32) / 3; 
+  const navigation = useNavigation<any>();
 
   return (
-    <View
+    <TouchableOpacity
+      onPress={() => navigation.navigate("Search", { filter: categorieTxt, filterBy: "category" })}
       style={{ width: itemWidth }}
       className="flex justify-between items-center gap-2 mb-5 w-full"
     >
@@ -23,7 +26,7 @@ export function Categorie({ categorieTxt, img, color = "#F3752B" }: CategoriePro
         <Image source={{ uri: img }} className="h-full w-full object-contain" />
       </View>
       <Text className="font-semibold">{categorieTxt}</Text>
-    </View>
+    </TouchableOpacity>
   );
 }
 

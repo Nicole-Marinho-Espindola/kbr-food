@@ -3,6 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Bell, ChevronLeft, Heart, Info, LogOut, NotepadText, Ticket } from "lucide-react-native";
 import { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
+import Toast from "react-native-toast-message";
 import Button from "~/components/form/Button";
 import Input from "~/components/form/Input";
 import { useAuth } from "~/contexts/AuthContext";
@@ -16,7 +17,7 @@ interface User {
 export default function ProfileScreen() {
     const [dropdown, setDropdown] = useState(false)
     const navigation = useNavigation<any>();
-    const { signOut, user } = useAuth();
+    const { signOut, user , setUser} = useAuth();
     const [address, setAddress] = useState<any>();
     const [userEdited, setUserEdited] = useState<User>({
         name: "",
@@ -47,19 +48,39 @@ export default function ProfileScreen() {
     }
 
     const handleEdit = async () => {
-        const newUser = {
-            name: userEdited.name,
-            email: userEdited.email,
-            password: userEdited.password
-        };
+        if (!user || typeof user === "string") {
+            console.error("Usuário inválido para edição");
+            return;
+        }
 
-        const storedUsers = await AsyncStorage.getItem("users");
-        const users = storedUsers ? JSON.parse(storedUsers) : [];
-        const updatedUsers = users.map((u: { email: string; }) => u.email === userEdited.email ? newUser : u);
-        await AsyncStorage.setItem("users", JSON.stringify(updatedUsers));
+        try {
+            const newUser = {
+                name: userEdited.name,
+                email: userEdited.email,
+                password: userEdited.password
+            };
 
-        console.log("Usuario editado com sucesso");
-    }
+            const storedUsers = await AsyncStorage.getItem("users");
+            const users = storedUsers ? JSON.parse(storedUsers) : [];
+            const updatedUsers = users.map((u: { email: string; }) =>
+                u.email === user.email ? newUser : u
+            );
+            await AsyncStorage.setItem("users", JSON.stringify(updatedUsers));
+
+            await AsyncStorage.setItem("@app:Logged", JSON.stringify(newUser));
+            setUser(newUser);
+
+            await AsyncStorage.setItem("user_address", address);
+
+            Toast.show({
+                type: "success",
+                text1: "Sucesso!",
+                text2: "Usuário editado com sucesso!"
+            });
+        } catch (err) {
+            console.error("Erro ao editar usuário:", err);
+        }
+    };
 
     const handleLogOut = async () => {
         await signOut();
@@ -140,6 +161,7 @@ export default function ProfileScreen() {
                     <Text className="text-[24px] font-light px-3">Sair</Text>
                 </TouchableOpacity>
             </View>
+            <Toast />
         </View>
     )
 }

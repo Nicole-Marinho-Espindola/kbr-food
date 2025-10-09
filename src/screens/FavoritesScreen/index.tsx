@@ -37,7 +37,9 @@ export default function FavoritesScreen() {
                             />
                         )
                     ) : (
-                        <Text className="text-[18px] text-darkGray mt-10">Você não possui produtos favoritados.</Text>
+                        <View className="flex justify-center items-center">
+                            <Text className="text-[18px] text-gray-500 mt-10">Você não possui produtos favoritados.</Text>
+                        </View>
                     )
                 }
             </View>
