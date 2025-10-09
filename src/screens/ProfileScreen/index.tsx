@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import { Bell, ChevronLeft, Info, LogOut, Ticket } from "lucide-react-native";
+import { Bell, ChevronLeft, Heart, Info, LogOut, NotepadText, Ticket } from "lucide-react-native";
 import { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import Button from "~/components/form/Button";
@@ -79,8 +79,12 @@ export default function ProfileScreen() {
             <Text className="text-[30px] font-light mt-10 mb-5">Bem vindo(a), <Text className="text-orange"> {userEdited.name.trim().split(' ')[0]}!</Text></Text>
             <View className="bg-white mt-5 rounded-xl">
                 <TouchableOpacity onPress={() => navigation.navigate("Orders")} className="flex justify-start items-center w-full flex-row p-5">
-                    <Ticket size={24} color="#F3752B" />
+                    <NotepadText size={24} color="#F3752B" />
                     <Text className="font-light text-[25px] rounded-xl px-3">Pedidos</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate("Favorite")} className="flex justify-start items-center w-full flex-row p-5">
+                    <Heart size={24} color="#F3752B" />
+                    <Text className="font-light text-[25px] rounded-xl px-3">Favoritos</Text>
                 </TouchableOpacity>
                 <TouchableOpacity className="flex justify-start items-center w-full flex-row p-5">
                     <Bell size={24} color="#F3752B" />

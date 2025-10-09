@@ -33,6 +33,7 @@ type CartContextType = {
   clearCart: () => void;
   totalValue: number;
   pedidosAntigos: Order[];
+  cartCount: number;
 };
 
 const CartContext = createContext<CartContextType>({} as CartContextType);
@@ -40,6 +41,7 @@ const CartContext = createContext<CartContextType>({} as CartContextType);
 export function CartProvider({ children } : { children: React.ReactNode }) {
     const [cart, setCart] = useState<Product[]>([]);
     const [pedidosAntigos, setPedidosAntigos] = useState<Order[]>([]);
+    const [cartCount, setCartCount] = useState<number>(0);
 
     const addToCart = (item: Product) => { 
       setCart((prev) => {
@@ -96,9 +98,14 @@ export function CartProvider({ children } : { children: React.ReactNode }) {
       })();
     }, []);
 
+    useEffect(() => {
+      const count = cart.reduce((acc, item) => acc + item.quantity, 0);
+      setCartCount(count);
+      AsyncStorage.setItem("@cart_count", count.toString());
+    }, [cart]);
 
     return (
-        <CartContext.Provider value={{ cart, addToCart, clearCart, removeFromCart, updateQuantity, totalValue, handlePlaceOrder, pedidosAntigos }}>
+        <CartContext.Provider value={{ cart, addToCart, clearCart, removeFromCart, updateQuantity, totalValue, handlePlaceOrder, pedidosAntigos, cartCount }}>
           {children}
         </CartContext.Provider>
     );
