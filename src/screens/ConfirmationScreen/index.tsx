@@ -6,6 +6,7 @@ import { View, Text, ScrollView, TextInput, TouchableOpacity } from "react-nativ
 import Toast from "react-native-toast-message"; 
 import TabButtons from "~/components/TabButtons";
 import { useCart } from "~/contexts/CartContext";
+import { usePushOrder } from "~/hooks/usePushOrder";
 
 export function ConfirmationItem({ title, price, desc, quantity }: { title: string, price: number, desc: string, quantity: number | string }) {
   return (
@@ -46,6 +47,7 @@ export default function ConfirmationScreen() {
   const [paymentMethod, setPaymentMethod] = useState<"Dinheiro" | "Pix" | "">("");
   const { cart, handlePlaceOrder } = useCart();
   const navigation = useNavigation<any>();
+  const { registerForPushNotificationsAsync, sendNotification } = usePushOrder();
 
   useEffect(() => {
     (async () => {
@@ -93,6 +95,9 @@ export default function ConfirmationScreen() {
         text1: "Pedido finalizado com sucesso!",
         text2: `Pagamento via ${paymentMethod} confirmado.`,
       });
+
+      await registerForPushNotificationsAsync();
+      await sendNotification( 'Pedido confirmado!', 'Seu pedido está sendo preparado com amor e agilidade');
       navigation.navigate("Orders");
     };
 
