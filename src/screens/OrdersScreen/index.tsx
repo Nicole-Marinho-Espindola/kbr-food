@@ -1,4 +1,4 @@
-import { View, Text,ScrollView } from "react-native";
+import { View, Text,ScrollView, TouchableOpacity } from "react-native";
 import TabButtons from "~/components/TabButtons";
 import {FileClock } from "lucide-react-native"
 import Button from "~/components/form/Button";
@@ -7,6 +7,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-toast-message";
 import dayjs from "dayjs";
 import { useState } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { PackageSearch } from "lucide-react-native";
+import { useNavigation } from "@react-navigation/core";
 
 export function OldOrder({ order, onConfirmDelivery, onCancel }: { order: any, onConfirmDelivery: () => void , onCancel: () => void }) {
   const [status, setStatus] = useState(order.status);
@@ -83,29 +86,46 @@ export default function OrdersScreen() {
         Toast.show({ type: "info", text1: "Pedido cancelado", text2: "O pedido foi cancelado com sucesso" });
     };
 
+    const navigation = useNavigation<any>();
+
     return(
-        <View className="p-5 h-screen">
-            <View className="flex justify-start items-center flex-row w-full gap-3.5 mt-14">
-                <FileClock size={24} color="#A20021" />
-                <Text className="text-[25px] font-light">Historico de pedidos</Text>
-            </View>
-            <ScrollView className="mt-8 max-h-[45em]">
-                {
-                pedidosAntigos && pedidosAntigos.length > 0 ? (
-                pedidosAntigos?.map((pedido) => (
-                    <OldOrder
+        <SafeAreaView className="flex-1">
+          <View className="p-5 flex-1">
+            {pedidosAntigos?.length ? (
+              <>
+                <View className="flex flex-row items-center gap-3.5 mt-4">
+                  <FileClock size={24} color="#A20021" />
+                  <Text className="text-[25px] font-light">Histórico de pedidos</Text>
+                </View>
+                <ScrollView
+                  className="mt-8 flex-1 mb-20"
+                  contentContainerStyle={{ flex: pedidosAntigos?.length ? 0 : 1 }}
+                >
+                    {pedidosAntigos.map((pedido) => (
+                      <OldOrder
                         key={pedido.id}
                         order={pedido}
                         onConfirmDelivery={() => ConfirmDelivery(pedido.id)}
                         onCancel={() => CancelOrder(pedido.id)}
-                    />
-                ))): (
-                    <Text>Nenhum pedido no seu historico</Text>
-                )}
-            </ScrollView>
-            <View className="flex-1 justify-center items-center w-full">
-                <TabButtons />
+                      />
+                    ))}
+                </ScrollView>
+              </>
+              ) : (
+                <View className="flex justify-center items-center h-full w-full gap-5">
+                    <PackageSearch size={80} color="#F3752B" />
+                    <Text className="text-[20px]">Nenhum pedido no histórico!</Text>
+                    <TouchableOpacity onPress={() => navigation.navigate("Home")} className="bg-pink px-5 py-3 rounded">
+                        <Text className="text-white text-[18px]">Voltar para as compras</Text>
+                    </TouchableOpacity>
+                </View>
+              )}
             </View>
-        </View>
+          <View
+            className="absolute bottom-0 left-1/2 -translate-x-1/2"
+          >
+            <TabButtons />
+          </View>
+        </SafeAreaView>
     )
 }

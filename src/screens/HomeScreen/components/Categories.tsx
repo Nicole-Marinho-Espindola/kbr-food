@@ -53,8 +53,8 @@ export default function Categories() {
               />
             )})
           ): (
-            <View>
-              <Text>Nenhuma categoria para listar</Text>
+            <View className="flex justify-center items-center w-full">
+              <Text className="flex justify-center items-center w-full">Nenhuma categoria para listar</Text>
             </View>
           )
         }

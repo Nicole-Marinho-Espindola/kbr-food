@@ -7,7 +7,7 @@ import FoodContainer from "./components/FoodContainer";
 export default function HomeScreen() {
 
   return (
-    <View className="flex justify-center items-center mb-28">
+    <View  className="flex justify-center items-center mb-28">
         <NavBar />
         <View className="flex justify-between bg-white rounded-tl-[90px] my-10 rounded-br-[90px] w-full h-[42em]">
             <Categories />
@@ -16,6 +16,6 @@ export default function HomeScreen() {
             </View>
         </View>
         <FoodContainer />
-    </View>
+    </View >
   );
 }

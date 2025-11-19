@@ -9,13 +9,12 @@ interface ContainerProps {
 
 export default function Container({
     className,
-    children,
-    height = "h-[85vh]",      
+    children,     
 }: ContainerProps) {
 
   return (
     <View
-      className={`absolute flex items-center bg-white w-full rounded-[55px] ${height} ${className} pt-20 px-12`}
+      className={`flex items-center bg-white w-full rounded-t-[55px] h-[80%] ${className} pt-20 px-12`}
     >
       {children}
     </View>

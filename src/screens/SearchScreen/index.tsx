@@ -1,11 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
-import { ChevronLeft } from "lucide-react-native";
+import { ChevronLeft, Folder } from "lucide-react-native";
 import { useEffect, useState } from "react";
 import { View, Text , Image, TouchableOpacity } from "react-native";
 import { api } from "~/api/api";
 import { Food } from "~/components/ui/Food";
 import SearchProducts from "~/components/ui/SearchProducts";
 import { useProduct } from "~/contexts/ProductsContext";
+import { FolderOpen } from "lucide-react-native";
+
 
 export function SearchCategorie({ name, img, color = "fff", onPress }: { name: string, img?: any, color?: string, onPress?: () => void }) {
   return(
@@ -39,7 +41,7 @@ export default function Search() {
   );
 
   return(
-    <View className="flex justify-center items-center p-5 w-full">
+    <View className="flex-1  justify-center items-center p-5 w-full">
       <SearchProducts 
         value={search}
         onChangeText={(text) => {
@@ -50,22 +52,27 @@ export default function Search() {
 
       {(!search && !activeCategory) && (
         <>
-          <Text className="my-10 text-gray-400 text-[20px]">Ou escolha por categoria</Text>
-          <View className="flex flex-row flex-wrap justify-between w-full gap-3 pb-24">
-            {categories?.length ? (
-              categories.map(categorie => (
-                <SearchCategorie 
-                  key={categorie.id}
-                  name={categorie.nome} 
-                  color={categorie.corHex} 
-                  img={categorie.imagem}
-                  onPress={() => setActiveCategory(categorie.nome)}
-                />
-              ))
+          {categories?.length ? (
+              <>
+                <Text className="my-10 text-gray-400 text-[20px]">Ou escolha por categoria</Text>
+                <View className="flex flex-row flex-wrap justify-between w-full gap-3 pb-24">
+                  {categories.map(categorie => (
+                    <SearchCategorie 
+                      key={categorie.id}
+                      name={categorie.nome} 
+                      color={categorie.corHex} 
+                      img={categorie.imagem}
+                      onPress={() => setActiveCategory(categorie.nome)}
+                    />
+                  ))}
+                </View>
+              </>
             ) : (
-              <Text>Nenhuma categoria para listar</Text>
+              <View className="flex-1 w-full justify-center items-center mt-10 pb-24">
+                <FolderOpen size={50} color="#6b7280" />
+                <Text className="text-[15px] text-gray-500 mt-8">Nenhuma categoria para listar</Text>
+              </View>
             )}
-          </View>
         </>
       )}
 

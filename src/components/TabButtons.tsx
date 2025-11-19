@@ -2,6 +2,7 @@ import { View, TouchableOpacity, Text } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Home, NotepadText, Search, ShoppingCart, User } from "lucide-react-native";
 import { useCart } from "~/contexts/CartContext";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function TabButtons() {
   const navigation = useNavigation<any>();
@@ -12,7 +13,7 @@ export default function TabButtons() {
     route.name === screen ? "#F52F57" : "#F79D5C"; 
 
   return (
-    <View className="absolute bottom-5 flex flex-row justify-between left-1/2 -translate-x-1/2 items-center bg-white h-20 shadow rounded-xl py-5 px-6 w-[350px]">
+    <SafeAreaView className="fixed bottom-0 flex flex-row justify-between items-center bg-white shadow rounded-xl px-10 pb-4 w-full">
       <TouchableOpacity onPress={() => navigation.navigate("Home")}>
         <Home size={30} color={getColor("Home")} />
       </TouchableOpacity>
@@ -37,6 +38,6 @@ export default function TabButtons() {
       <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
         <User size={30} color={getColor("Profile")} />
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 }

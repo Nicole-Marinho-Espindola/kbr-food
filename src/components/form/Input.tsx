@@ -13,7 +13,7 @@ export default function Input({ placeholder, type = 'text', borderColor = "borde
     const [text, setText] = useState('');
 
     return(
-        <View className={`w-full border-b ${borderColor} mb-6 px-5`}>
+        <View className={`w-full border-b ${borderColor} mb-6 px-3`}>
             <TextInput
                 value={value}
                 secureTextEntry={type === 'password'}

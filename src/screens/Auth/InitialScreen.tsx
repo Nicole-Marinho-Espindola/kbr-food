@@ -7,7 +7,7 @@ export default function Initial() {
   const navigation = useNavigation<any>();
 
   return (
-    <View className="bg-darkPink flex justify-center items-center flex-col h-[100vh] px-10" >
+    <View className="bg-darkPink flex-1 justify-center items-center flex-col px-10" >
         <MainTitle 
           title="Seja Bem-Vindo!" 
           subtitle="Pronto para conhecer os melhores restaurantes?" 

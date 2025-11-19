@@ -51,14 +51,14 @@ export default function NavBar() {
   }
 
   return (
-    <View className="px-5 mt-5 w-full">
-      <View className="relative flex justify-start items-center flex-row w-full">
+    <View className="px-5 w-full">
+      <View className="relative flex-1 justify-start items-center flex-row w-full">
         <TouchableOpacity onPress={() => {}} className="mr-8">
           <Bell size={34} color="#F52F57" />
         </TouchableOpacity>
 
         {address ? (
-          <View className="relative flex justify-center items-center flex-wrap h-[35px] w-[22em] rounded flex-row">
+          <View className="relative flex justify-center items-center flex-wrap w-[22em] rounded flex-row">
             <Text className="font-semibold w-full">{address}</Text>
           </View>
         ) : (

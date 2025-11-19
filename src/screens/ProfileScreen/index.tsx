@@ -88,31 +88,31 @@ export default function ProfileScreen() {
     }
     
     return(
-        <View className="p-5">
+        <View className="px-5">
             <TouchableOpacity onPress={() => navigation.navigate('Home')} className="flex justify-start items-center flex-row w-full">
                 <ChevronLeft size={24} color="#F52F57" />
                 <Text className="text-[24px] text-pink">Voltar</Text>
             </TouchableOpacity>
-            <Text className="text-[30px] font-light mt-10 mb-5">Bem vindo(a), <Text className="text-orange"> {userEdited.name.trim().split(' ')[0]}!</Text></Text>
+            <Text className="text-[24px] font-light mt-10 mb-5">Bem vindo(a), <Text className="text-orange"> {userEdited.name.trim().split(' ')[0]}!</Text></Text>
             <View className="bg-white mt-5 rounded-xl mb-20">
                 <TouchableOpacity onPress={() => navigation.navigate("Orders")} className="flex justify-start items-center w-full flex-row p-5">
                     <NotepadText size={24} color="#F3752B" />
-                    <Text className="font-light text-[25px] rounded-xl px-3">Pedidos</Text>
+                    <Text className="font-light text-[22px] rounded-xl px-3">Pedidos</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigation.navigate("Favorite")} className="flex justify-start items-center w-full flex-row p-5">
                     <Heart size={24} color="#F3752B" />
-                    <Text className="font-light text-[25px] rounded-xl px-3">Favoritos</Text>
+                    <Text className="font-light text-[22px] rounded-xl px-3">Favoritos</Text>
                 </TouchableOpacity>
                 <TouchableOpacity className="flex justify-start items-center w-full flex-row p-5">
                     <Bell size={24} color="#F3752B" />
-                    <Text className="font-light text-[25px] rounded-xl px-3">Notificações</Text>
+                    <Text className="font-light text-[22px] rounded-xl px-3">Notificações</Text>
                 </TouchableOpacity>
                 <TouchableOpacity 
                     onPress={() => setDropdown(prev => (!prev))} 
                     className="flex justify-start items-center flex-row p-5 pb-0 mb-5"
                 >
                     <Info size={24} color="#F3752B" />
-                    <Text className="font-light text-[25px] px-3">Dados da Conta</Text>
+                    <Text className="font-light text-[22px] px-3">Dados da Conta</Text>
                 </TouchableOpacity>
                 {
                     dropdown && (

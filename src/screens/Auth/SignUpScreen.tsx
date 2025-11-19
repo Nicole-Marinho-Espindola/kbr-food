@@ -31,12 +31,12 @@ export default function SignUp() {
   };
 
   return (
-    <View className="bg-darkPink flex justify-start items-center flex-col h-[100vh]" >
+    <View className="bg-darkPink flex-1 justify-between items-center flex-col" >
       <TouchableOpacity onPress={() => navigation.navigate('Login')} className="flex justify-start items-center flex-row mt-20 px-10 w-full">
         <ChevronLeft size={30} color='#fff' />
         <Text className="text-white text-[20px]">Voltar</Text>
       </TouchableOpacity>
-      <Container className={` pt-20 -bottom-10`}>
+      <Container className={` pt-20`}>
         <MainTitle 
           title="Cadastre-se!" 
           subtitle="Pronto para conhecer os melhores restaurantes?" 

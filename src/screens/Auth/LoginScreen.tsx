@@ -8,21 +8,31 @@ import LogoTxt from "~/components/LogoTxt";
 import Container from "~/components/form/Container";
 import { useAuth } from "~/contexts/AuthContext";
 import { useState } from "react";
+import LoadingScreen from "./components/LoadingScreen";
 
 export default function Login() {
   const navigation = useNavigation<any>();
   
   const [error , setError] = useState(false)
+  const [loading , setLoading] = useState(false)
   const [user, setUser] = useState({
     email: "",
     password: ""
   })
   const { signIn } = useAuth()
 
+  if (loading) {
+    return <LoadingScreen />;
+  }
+
   const handleLoginUser = async () => {
     try {
       await signIn(user.email, user.password);
-      navigation.navigate("Home");
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+        navigation.replace("Home"); 
+      }, 2000);
     } catch (err: any) {
       setError(err.message || "Erro inesperado. Tente novamente.");
       setUser({ email: "", password: "" });
@@ -30,44 +40,44 @@ export default function Login() {
   };
 
   return (
-    <View className="bg-darkPink flex justify-end items-center flex-col h-[100vh]" >
-      <Container className="-bottom-10">
+    <View className="bg-darkPink flex-1 justify-end items-center flex-col">
+      <Container>
         <MainTitle 
           title="Bem vindo de Volta!" 
           subtitle="Pronto para conhecer os melhores restaurantes?" 
         />
+        
         <View className="w-full mt-20 space-y-10">
+
           <Input 
             placeholder="Email" 
             type="text" 
             value={user.email} 
             onChangeText={(text) => setUser(prev => ({ ...prev, email: text })) }
           />
+
           <Input 
             placeholder="Senha" 
             type="password" 
             value={user.password} 
             onChangeText={(text) => setUser(prev => ({...prev, password: text}))}
           />
-          {
-            error && (
-              <View className="flex justify-center items-center w-full">
-                <Text className="text-red-700 text-[15px]"> {error} </Text>
-              </View>
-            )
-          }
+
+          {error && (
+            <View className="flex justify-center items-center w-full">
+              <Text className="text-red-700 text-[15px]">{error}</Text>
+            </View>
+          )}
+
           <View className="flex justify-center items-center text-[16px] font-light my-10 w-full"> 
             <Text className="text-light">Não possui uma conta? </Text>
             <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-              <Text className="text-orange-500 text-[16px] font-regular text-orange">
+              <Text className="text-orange-500 text-[16px] font-regular">
                 Cadastre-se
               </Text>
             </TouchableOpacity>
           </View>
-          <Button  title='Entrar' onPress={handleLoginUser} />
-        </View>
-        <View className="absolute bottom-24 w-full">
-          <LogoTxt />
+          <Button title="Entrar" onPress={handleLoginUser} />
         </View>
       </Container>
     </View>

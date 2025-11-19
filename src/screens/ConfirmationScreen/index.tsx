@@ -6,7 +6,7 @@ import { View, Text, ScrollView, TextInput, TouchableOpacity } from "react-nativ
 import Toast from "react-native-toast-message"; 
 import TabButtons from "~/components/TabButtons";
 import { useCart } from "~/contexts/CartContext";
-import { usePushOrder } from "~/hooks/usePushOrder";
+import { usePushOrder } from "../../hooks/UsePushOrder";
 
 export function ConfirmationItem({ title, price, desc, quantity }: { title: string, price: number, desc: string, quantity: number | string }) {
   return (
