@@ -13,7 +13,7 @@ export default function TabButtons() {
     route.name === screen ? "#F52F57" : "#F79D5C"; 
 
   return (
-    <SafeAreaView className="fixed bottom-0 flex flex-row justify-between items-center bg-white shadow rounded-xl px-10 pb-4 w-full">
+    <SafeAreaView className="fixed bottom-0 flex flex-row justify-between items-center bg-white shadow rounded-xl px-10 pb-4 w-full h-5">
       <TouchableOpacity onPress={() => navigation.navigate("Home")}>
         <Home size={30} color={getColor("Home")} />
       </TouchableOpacity>
