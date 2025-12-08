@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "my-expo-app",
-    "slug": "my-expo-app",
+    "name": "KBR Food",
+    "slug": "kbr-food",
     "version": "1.0.0",
     "web": {
       "favicon": "./assets/favicon.png"
@@ -11,13 +11,14 @@
     },
     "plugins": [],
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/app-icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/app-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#8B0018" 
     },
+
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -26,7 +27,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/lamen.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.nicolexyz5.myexpoapp"
