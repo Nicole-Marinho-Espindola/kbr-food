@@ -37,7 +37,7 @@ type CartContextType = {
   addToCart: (item: Product) => void;
   handlePlaceOrder: (item: Order) => void;
   removeFromCart: (id: number) => void;
-  updateQuantity: (id: number, qtd: number) => void;
+  updateQuantity: (id: number, quantity: number) => void;
   clearCart: () => void;
   totalValue: number;
   pedidosAntigos: Order[];
@@ -58,7 +58,7 @@ export function CartProvider({ children } : { children: React.ReactNode }) {
         if (existing) {
           return prev.map((p) =>
             p.id === item.id
-              ? { ...p, qtd: p.quantity + item.quantity, total: (p.quantity + item.quantity) * p.price }
+              ? { ...p, quantity: p.quantity + item.quantity, total: (p.quantity + item.quantity) * p.price }
               : p
           );
         }
@@ -70,44 +70,46 @@ export function CartProvider({ children } : { children: React.ReactNode }) {
       setCart((prev) => prev.filter((p) => p.id !== id));
     }
 
-    const updateQuantity = (id: number, qtd: number ) => { 
+    const updateQuantity = (id: number, quantity: number ) => { 
       setCart((prev) =>
         prev.map((p) =>
-          p.id === id ? { ...p, qtd, total: qtd * p.price } : p
+          p.id === id ? { ...p, quantity, total: quantity * p.price } : p
         )
       );
     }
 
     const handlePlaceOrder = async (novoPedido: Omit<Order, "items" | "total" | "date" | "status">) => {
       try {
-        const pedidoComStatus: Order = {
-          ...novoPedido,
-          items: cart.map(item => ({
-            id: item.id,
-            title: item.title,
-            description: item.description,
-            price: item.price,
-            quantity: item.quantity,
-            image: item.image,
-          })),
-          total: cart.reduce((acc, item) => acc + item.price * item.quantity, 0),
-          date: new Date().toISOString(),
-          status: "Pendente" as const,
-        };
+        if(cart) {
 
-        const pedidosAtualizados = [pedidoComStatus, ...pedidosAntigos];
-
-        await AsyncStorage.setItem("pedidos_antigos", JSON.stringify(pedidosAtualizados));
-        setPedidosAntigos(pedidosAtualizados);
-        setCart([]);
-        console.log("Pedido salvo com sucesso e marcado como pendente! 🚀");
+          const pedidoComStatus: Order = {
+            ...novoPedido,
+            items: cart.map(item => ({
+              id: item.id,
+              title: item.title,
+              description: item.description,
+              price: item.price,
+              quantity: item.quantity,
+              image: item.image,
+            })),
+            total: cart.reduce((acc, item) => acc + item.price * item.quantity, 0),
+            date: new Date().toISOString(),
+            status: "Pendente" as const,
+          };
+          const pedidosAtualizados = [pedidoComStatus, ...pedidosAntigos];
+  
+          await AsyncStorage.setItem("pedidos_antigos", JSON.stringify(pedidosAtualizados));
+          setPedidosAntigos(pedidosAtualizados);
+          setCart([]);
+          console.log("Pedido salvo com sucesso e marcado como pendente! 🚀");
+        }
       } catch (error) {
         console.error("Erro ao salvar pedido:", error);
       }
     };
 
 
-    const totalValue = cart.reduce((acc, item) => acc + item.total, 0);
+    const totalValue = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
     const clearCart = () => {
       setCart([]);
@@ -125,9 +127,11 @@ export function CartProvider({ children } : { children: React.ReactNode }) {
     }, []);
 
     useEffect(() => {
-      const count = cart.reduce((acc, item) => acc + item.quantity, 0);
-      setCartCount(count);
-      AsyncStorage.setItem("@cart_count", count.toString());
+      if(cart) {
+        const count = cart.reduce((acc, item) => acc + item.quantity, 0);
+        setCartCount(count);
+        AsyncStorage.setItem("@cart_count", count.toString());
+      }
     }, [cart]);
 
     return (

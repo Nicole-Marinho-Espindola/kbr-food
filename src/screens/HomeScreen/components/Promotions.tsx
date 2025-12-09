@@ -29,7 +29,7 @@ function Food({desc, price, img}: {desc:string, price:number, img:string}) {
 export default function Promotions() {
   const navigation = useNavigation<any>();
   const { products } = useProduct();
-  const cheapest = products.reduce((prev, curr) => prev.preco < curr.preco ? prev : curr, products[0]);
+  const cheapest = products && products.reduce((prev, curr) => prev.preco < curr.preco ? prev : curr, products[0]);
 
   return (
     <TouchableOpacity onPress={() => navigation.navigate('Details', { productId: cheapest.id})} className="flex justify-center items-center px-6 pt-10">

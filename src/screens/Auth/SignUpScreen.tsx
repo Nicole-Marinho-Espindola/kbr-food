@@ -11,6 +11,7 @@ import { useAuth } from "~/contexts/AuthContext";
 
 export default function SignUp() {
   const navigation = useNavigation<any>();
+  const [error , setError] = useState<string | null>(null)
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -20,12 +21,16 @@ export default function SignUp() {
   const { signUp } = useAuth();
   
   const handleAddUser = async () => {
+    if (!user.name.trim() || !user.email.trim() || !user.password.trim()) {
+      setError("Preencha todos os campos antes de continuar.");
+      return;
+    }
+    
     try {
       const userData = await signUp(user.name, user.email, user.password )
       navigation.navigate('Home');
       return userData;
     } catch (err: any) {
-      console.log("Erro ao cadastrar:", err);
       alert(err.message || "Erro inesperado");
     }
   };
@@ -64,9 +69,16 @@ export default function SignUp() {
               onChangeText={(text) => setUser(prev => ({ ...prev, password: text }))}
             />
           </View>
+          {
+            error && (
+              <View className="flex justify-center items-center w-full">
+                <Text className="text-red-700 text-[15px]">{error}</Text>
+              </View>
+            ) 
+          }
           <View className="flex justify-center items-center text-[16px] font-light my-10 w-full"> 
             <Text className="text-light">Já possui conta? </Text>
-            <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
               <Text className="text-orange-500 text-[16px] font-regular text-orange">
                 Entre aqui
               </Text>

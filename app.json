@@ -16,9 +16,8 @@
     "splash": {
       "image": "./assets/app-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#8B0018" 
+      "backgroundColor": "#8B0018"
     },
-
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -27,15 +26,16 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/lamen.png",
+        "foregroundImage": "./assets/app-icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.nicolexyz5.myexpoapp"
     },
     "extra": {
       "eas": {
-        "projectId": "48dddd35-3e03-4a11-9af5-325e5b2cfc23"
+        "projectId": "c624cfd7-6ae7-494d-9439-353d170db029"
       }
-    }
+    },
+    "owner": "nicolexyz5"
   }
 }

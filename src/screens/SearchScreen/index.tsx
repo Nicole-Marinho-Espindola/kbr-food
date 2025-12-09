@@ -55,7 +55,7 @@ export default function Search() {
           {categories?.length ? (
               <>
                 <Text className="my-10 text-gray-400 text-[20px]">Ou escolha por categoria</Text>
-                <View className="flex flex-row flex-wrap justify-between w-full gap-3 pb-24">
+                <View className="flex-1 flex-row flex-wrap justify-between w-full gap-3 pb-24">
                   {categories.map(categorie => (
                     <SearchCategorie 
                       key={categorie.id}
