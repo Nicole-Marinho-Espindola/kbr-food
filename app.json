@@ -4,17 +4,17 @@
     "slug": "kbr-food",
     "version": "1.0.0",
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/IconKitchen-Output/web/favicon.ico"
     },
     "experiments": {
       "tsconfigPaths": true
     },
     "plugins": [],
     "orientation": "portrait",
-    "icon": "./assets/app-icon.png",
+    "icon": "./assets/IconKitchen-Output/android/mipmap-xxxhdpi/lamen-icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/app-icon.png",
+      "image": "./assets/IconKitchen-Output/android/mipmap-xxxhdpi/lamen-icon_monochrome.png",
       "resizeMode": "contain",
       "backgroundColor": "#8B0018"
     },
@@ -26,8 +26,8 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/app-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/IconKitchen-Output/android/mipmap-xxxhdpi/lamen-icon_foreground.png",
+        "backgroundColor": "#8B0018"
       },
       "package": "com.nicolexyz5.myexpoapp"
     },

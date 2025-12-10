@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { ChevronLeft } from "lucide-react-native";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, KeyboardAvoidingView, ScrollView , Platform} from "react-native";
 import Input from "~/components/form/Input";
 import MainTitle from "~/components/MainTitle";
 import Button from "~/components/form/Button";
@@ -40,46 +40,58 @@ export default function Login() {
   };
 
   return (
-    <View className="bg-darkPink flex-1 justify-end items-center flex-col">
-      <Container>
-        <MainTitle 
-          title="Bem vindo de Volta!" 
-          subtitle="Pronto para conhecer os melhores restaurantes?" 
-        />
-        
-        <View className="w-full mt-20 space-y-10">
+    <KeyboardAvoidingView 
+      style={{ flex: 1 }} 
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <ScrollView 
+        contentContainerStyle={{ flexGrow: 1 }} 
+        keyboardShouldPersistTaps="handled"
+      >
+        <View className="bg-darkPink flex-1 justify-end items-center flex-col">
+          <Container>
+            <MainTitle 
+              title="Bem vindo de Volta!" 
+              subtitle="Pronto para conhecer os melhores restaurantes?" 
+            />
+            
+            <View className="w-full mt-20 space-y-10">
 
-          <Input 
-            placeholder="Email" 
-            type="text" 
-            value={user.email} 
-            onChangeText={(text) => setUser(prev => ({ ...prev, email: text })) }
-          />
+              <Input 
+                placeholder="Email" 
+                type="text" 
+                value={user.email} 
+                onChangeText={(text) => setUser(prev => ({ ...prev, email: text })) }
+              />
 
-          <Input 
-            placeholder="Senha" 
-            type="password" 
-            value={user.password} 
-            onChangeText={(text) => setUser(prev => ({...prev, password: text}))}
-          />
+              <Input 
+                placeholder="Senha" 
+                type="password" 
+                value={user.password}
+                onChangeText={(text) => setUser(prev => ({...prev, password: text}))}
+              />
 
-          {error && (
-            <View className="flex justify-center items-center w-full">
-              <Text className="text-red-700 text-[15px]">{error}</Text>
+              {error && (
+                <View className="flex justify-center items-center w-full">
+                  <Text className="text-red-700 text-[15px]">{error}</Text>
+                </View>
+              )}
+
+              <View className="flex justify-center items-center text-[16px] font-light my-10 w-full"> 
+                <Text className="text-light">Não possui uma conta? </Text>
+                <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+                  <Text className="text-orange-500 text-[16px] font-regular">
+                    Cadastre-se
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
+              <Button title="Entrar" onPress={handleLoginUser} />
             </View>
-          )}
-
-          <View className="flex justify-center items-center text-[16px] font-light my-10 w-full"> 
-            <Text className="text-light">Não possui uma conta? </Text>
-            <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-              <Text className="text-orange-500 text-[16px] font-regular">
-                Cadastre-se
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <Button title="Entrar" onPress={handleLoginUser} />
+          </Container>
         </View>
-      </Container>
-    </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
+
 }
