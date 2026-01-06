@@ -22,8 +22,19 @@ export function OldOrder({ order, onConfirmDelivery, onCancel }: { order: any, o
     onConfirmDelivery(); 
   };
 
-  const handleCancel = () => {
+  const handleCancel = async () => {
     setStatus("Cancelado");
+
+    const saveNotification = await AsyncStorage.getItem("notifications");
+    const notificationsArray = saveNotification ? JSON.parse(saveNotification) : [];
+    notificationsArray.push({ 
+      id: Date.now(), 
+      title: 'Pedido cancelado', 
+      message: `Seu pedido #${order.id} foi cancelado com sucesso!`, 
+      date: new Date().toISOString() 
+    });
+    await AsyncStorage.setItem("notifications", JSON.stringify(notificationsArray));
+    
     onCancel();
   };
 

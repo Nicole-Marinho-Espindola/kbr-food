@@ -103,7 +103,7 @@ export default function ProfileScreen() {
                     <Heart size={24} color="#F3752B" />
                     <Text className="font-light text-[22px] rounded-xl px-3">Favoritos</Text>
                 </TouchableOpacity>
-                <TouchableOpacity className="flex justify-start items-center w-full flex-row p-5">
+                <TouchableOpacity onPress={() => navigation.navigate("Notifications")} className="flex justify-start items-center w-full flex-row p-5">
                     <Bell size={24} color="#F3752B" />
                     <Text className="font-light text-[22px] rounded-xl px-3">Notificações</Text>
                 </TouchableOpacity>

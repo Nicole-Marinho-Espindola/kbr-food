@@ -41,7 +41,7 @@ export default function Search() {
   );
 
   return(
-    <View className="flex-1  justify-center items-center p-5 w-full">
+    <View className="flex-1 justify-center items-center p-5 w-full">
       <SearchProducts 
         value={search}
         onChangeText={(text) => {
@@ -77,7 +77,7 @@ export default function Search() {
       )}
 
       {(search || activeCategory) && (
-        <View className="flex flex-row flex-wrap justify-between w-full gap-3 pt-10 pb-24">
+        <View className="flex-1 flex-row flex-wrap justify-between w-full gap-3 pt-10 pb-24">
             <TouchableOpacity onPress={() => { setSearch(""); setActiveCategory(null); }} className="flex justify-center items-center flex-row mb-5">
                 <ChevronLeft size={30} color="#F52F57" />
                 <Text className="text-[18px] text-pink font-semibold">Voltar</Text>

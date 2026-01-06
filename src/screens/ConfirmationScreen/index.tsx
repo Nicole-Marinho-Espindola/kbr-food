@@ -44,6 +44,7 @@ type Order = {
 export default function ConfirmationScreen() {
   const [num, setNum] = useState("");
   const [address, setAddress] = useState("");
+  const [notification, setNotification] = useState<string[]>([]);
   const [paymentMethod, setPaymentMethod] = useState<"Dinheiro" | "Pix" | "">("");
   const { cart, handlePlaceOrder } = useCart();
   const navigation = useNavigation<any>();
@@ -88,21 +89,36 @@ export default function ConfirmationScreen() {
         status: "Pendente" as const,
       };
 
-      await handlePlaceOrder(novoPedido);
-
+      
       Toast.show({
         type: "success",
         text1: "Pedido finalizado com sucesso!",
         text2: `Pagamento via ${paymentMethod} confirmado.`,
       });
-
+      
       await registerForPushNotificationsAsync();
-      await sendNotification( 'Pedido confirmado!', 'Seu pedido está sendo preparado com amor e agilidade');
+      await sendNotification( 'Pedido confirmado!', `Seu pedido #${novoPedido.id} está sendo preparado com amor e agilidade`);
+      
+      const saveNotification = await AsyncStorage.getItem("notifications");
+      const notificationsArray = saveNotification ? JSON.parse(saveNotification) : [];
+
+      notificationsArray.push({
+        id: Date.now(), 
+        title: 'Pedido confirmado!', 
+        message: `Seu pedido #${novoPedido.id} está sendo preparado com amor e agilidade`, 
+        date: new Date().toISOString() 
+      });
+      
+      await AsyncStorage.setItem("notifications", JSON.stringify(notificationsArray));
+      console.log("Notificações salvas:", notificationsArray);
+
+      await handlePlaceOrder(novoPedido);
+
       navigation.navigate("Orders");
     };
 
   return (
-    <View className="flex justify-start items-center h-screen w-full gap-5">
+    <View className="flex justify-between items-center h-screen w-full">
       <View className="font-light text-[20px] mb-3 h-40 pt-12 bg-darkPink w-full flex justify-center items-center flex-row gap-2 rounded-br-[50px]">
         <Info size={20} color="#fff" />
         <Text className="text-white text-[24px] font-semibold">Informações do pedido</Text>

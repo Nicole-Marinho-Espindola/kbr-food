@@ -66,62 +66,62 @@ export default function CartScreen() {
         <SafeAreaView className="flex-1 bg-white">
         {cart.length > 0 ? (
             <>
-            <View className="flex-1 px-5 pt-5">
-                <ScrollView
-                className="w-full"
-                contentContainerStyle={{
-                    paddingBottom: 20,
-                    gap: 10,
-                }}
-                >
-                {cart.map(item => (
-                    <CartItem
-                    key={item.id}
-                    id={item.id}
-                    img={{ uri: item.image }}
-                    text={item.title}
-                    quantity={item.quantity}
-                    price={`R$ ${item.total.toFixed(2)}`}
-                    />
-                ))}
-                </ScrollView>
-
-                <View className="w-full flex-row justify-between items-center my-5">
-                <Text>
-                    Frete fixo de <Text className="text-darkPink">R$ 5,30</Text>
-                </Text>
-                {cart.length > 0 && (
-                    <TouchableOpacity
-                    onPress={clearCart}
-                    className="flex-row items-center border-b border-pink p-1"
+                <View className="flex-1 px-5 pt-5 pb-50">
+                    <ScrollView
+                    className="w-full"
+                    contentContainerStyle={{
+                        paddingBottom: 20,
+                        gap: 10,
+                    }}
                     >
-                    <Text className="text-darkPink mr-2">Limpar Carrinho</Text>
-                    <Trash color="red" size={20} />
-                    </TouchableOpacity>
-                )}
-                </View>
-            </View>
+                    {cart.map(item => (
+                        <CartItem
+                        key={item.id}
+                        id={item.id}
+                        img={{ uri: item.image }}
+                        text={item.title}
+                        quantity={item.quantity}
+                        price={`R$ ${item.total.toFixed(2)}`}
+                        />
+                    ))}
+                    </ScrollView>
 
-            <View className="bg-darkPink p-5 rounded-tl-[90px]">
-                <View className="w-full p-5">
-                <View className="flex-row justify-between my-1.5">
-                    <Text className="font-bold text-white text-[22px]">Subtotal</Text>
-                    <Text className="text-white text-[20px]">R$ {totalValue.toFixed(2)}</Text>
+                    <View className="w-full flex-row justify-between items-center my-5">
+                    <Text>
+                        Frete fixo de <Text className="text-darkPink">R$ 5,30</Text>
+                    </Text>
+                    {cart.length > 0 && (
+                        <TouchableOpacity
+                        onPress={clearCart}
+                        className="flex-row items-center border-b border-pink p-1"
+                        >
+                        <Text className="text-darkPink mr-2">Limpar Carrinho</Text>
+                        <Trash color="red" size={20} />
+                        </TouchableOpacity>
+                    )}
+                    </View>
                 </View>
 
-                <View className="flex-row justify-between my-1.5">
-                    <Text className="font-bold text-white text-[22px]">Frete</Text>
-                    <Text className="text-white text-[20px]">R$ {shipping.toFixed(2)}</Text>
-                </View>
+                <View className="bg-darkPink p-5 rounded-tl-[90px] mb-[4.5em]">
+                    <View className="w-full p-5">
+                    <View className="flex-row justify-between my-1.5">
+                        <Text className="font-bold text-white text-[22px]">Subtotal</Text>
+                        <Text className="text-white text-[20px]">R$ {totalValue.toFixed(2)}</Text>
+                    </View>
 
-                <View className="flex-row justify-between my-1.5">
-                    <Text className="font-bold text-white text-[22px]">Total</Text>
-                    <Text className="text-white text-[20px]">R$ {finalValue.toFixed(2)}</Text>
-                </View>
-                </View>
+                    <View className="flex-row justify-between my-1.5">
+                        <Text className="font-bold text-white text-[22px]">Frete</Text>
+                        <Text className="text-white text-[20px]">R$ {shipping.toFixed(2)}</Text>
+                    </View>
 
-                <Button title="Confirmar pedido" onPress={() => navigation.navigate("Confirmation")} />
-            </View>
+                    <View className="flex-row justify-between my-1.5">
+                        <Text className="font-bold text-white text-[22px]">Total</Text>
+                        <Text className="text-white text-[20px]">R$ {finalValue.toFixed(2)}</Text>
+                    </View>
+                    </View>
+
+                    <Button title="Confirmar pedido" onPress={() => navigation.navigate("Confirmation")} />
+                </View>
             </>
         ) : (
             <View className="flex-1 justify-center items-center gap-5">

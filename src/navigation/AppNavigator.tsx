@@ -6,6 +6,7 @@ import FavoriteScreen from '../screens/FavoritesScreen';
 import DetailsScreen from '../screens/DetailsScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import ConfirmationScreen from '../screens/ConfirmationScreen';
+import NotificationsScreen from '../screens/NotificationsScreen';
 import Initial from '../screens/Auth/InitialScreen';
 import Login from '../screens/Auth/LoginScreen';
 import SignUp from '../screens/Auth/SignUpScreen';
@@ -62,6 +63,14 @@ export default function AppNavigator() {
         {() => (
           <MainLayout>
             <ProfileScreen />
+          </MainLayout>
+        )}
+      </Stack.Screen>
+
+      <Stack.Screen name="Notifications">
+        {() => (
+          <MainLayout>
+            <NotificationsScreen />
           </MainLayout>
         )}
       </Stack.Screen>
