@@ -10,8 +10,8 @@ npm-debug.*
 *.orig.*
 web-build/
 
-
-
+# Exceção: incluir assets de ícones Android (deve vir ANTES da regra android)
+!assets/IconKitchen-Output/android/**
 
 ios
 android
