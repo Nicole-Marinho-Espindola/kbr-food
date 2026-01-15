@@ -13,10 +13,10 @@
       "./plugins/withNetworkSecurity.js"
     ],
     "orientation": "portrait",
-    "icon": "./assets/IconKitchen-Output/android/mipmap-xxxhdpi/lamen-icon.png",
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/IconKitchen-Output/android/mipmap-xxxhdpi/lamen-icon_monochrome.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#8B0018"
     },
@@ -28,7 +28,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/IconKitchen-Output/android/mipmap-xxxhdpi/lamen-icon_foreground.png",
+        "foregroundImage": "./assets/adaptive-foreground.png",
         "backgroundColor": "#8B0018"
       },
       "package": "com.nicolexyz5.myexpoapp"
